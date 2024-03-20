@@ -1,10 +1,5 @@
 package ch.gibb.localy.data.dto;
 
-import ch.gibb.localy.data.entity.Message;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
-
 import java.util.List;
 
 public class TownDto {
@@ -13,12 +8,7 @@ public class TownDto {
 
     private String name;
 
-    @JsonIgnore
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
-    private List<Message> messages;
+    private List<MessageDto> messages;
 
     public String getId() {
         return id;
@@ -36,12 +26,11 @@ public class TownDto {
         this.name = name;
     }
 
-    public List<Message> getMessages() {
+    public List<MessageDto> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(List<MessageDto> messages) {
         this.messages = messages;
     }
-
 }
