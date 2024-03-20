@@ -5,7 +5,6 @@ import ch.gibb.localy.data.dto.UserDto;
 import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.UserMapper;
 import ch.gibb.localy.data.repository.UserRepository;
-import com.sun.jdi.request.InvalidRequestStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,22 +25,25 @@ public class UserService {
         } else return null;
     }
 
-    public User signUp(User user) {
-        user.setPassword(user.getPassword());
-        userRepository.save(user);
-        return user;
+    public UserDto signUp(UserDto userDto) {
+        userRepository.save(UserMapper.fromDto(userDto));
+        return userDto;
     }
 
-    public Iterable<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDto> findAll() {
+        List<UserDto> towns = new ArrayList<>();
+        for (User u : userRepository.findAll()) {
+            towns.add(UserMapper.toDto(u));
+        }
+        return towns;
     }
 
-    public User findById(Integer id) {
-        return userRepository.findById(id).orElseThrow();
+    public UserDto findById(Integer id) {
+        return UserMapper.toDto(userRepository.findById(id).orElseThrow());
     }
 
-    public void update(User user) {
-        userRepository.save(user);
+    public void update(UserDto userDto) {
+        userRepository.save(UserMapper.fromDto(userDto));
     }
 
     public void deleteById(Integer id) {

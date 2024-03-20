@@ -1,7 +1,6 @@
 package ch.gibb.localy.data.dto;
 
 import ch.gibb.localy.data.entity.User;
-import jakarta.persistence.*;
 
 public class MessageDto {
     public String id;

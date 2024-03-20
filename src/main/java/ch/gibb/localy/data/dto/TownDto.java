@@ -1,9 +1,9 @@
 package ch.gibb.localy.data.dto;
 
 import ch.gibb.localy.data.entity.Message;
-import ch.gibb.localy.data.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 
 import java.util.List;
 

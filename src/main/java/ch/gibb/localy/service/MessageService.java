@@ -1,13 +1,9 @@
 package ch.gibb.localy.service;
 
 import ch.gibb.localy.data.dto.MessageDto;
-import ch.gibb.localy.data.dto.TownDto;
-import ch.gibb.localy.data.dto.UserDto;
 import ch.gibb.localy.data.entity.Message;
-import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.MessageMapper;
 import ch.gibb.localy.data.repository.MessageRepository;
-import ch.gibb.localy.data.repository.TownRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +24,7 @@ public class MessageService {
 
     public List<MessageDto> findAll() {
         List<MessageDto> messages = new ArrayList<>();
-        for ( Message m :messageRepository.findAll()) {
+        for (Message m : messageRepository.findAll()) {
             messages.add(MessageMapper.toDto(m));
         }
         return messages;

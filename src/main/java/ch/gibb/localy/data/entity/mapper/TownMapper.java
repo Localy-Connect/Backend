@@ -2,9 +2,7 @@ package ch.gibb.localy.data.entity.mapper;
 
 
 import ch.gibb.localy.data.dto.TownDto;
-import ch.gibb.localy.data.dto.UserDto;
 import ch.gibb.localy.data.entity.Town;
-import ch.gibb.localy.data.entity.User;
 
 public class TownMapper {
     public static Town fromDto(TownDto townDto) {
