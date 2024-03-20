@@ -1,8 +1,6 @@
 package ch.gibb.localy.data.dto;
 
 import ch.gibb.localy.data.entity.Town;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
 
 public class UserDto {
 
