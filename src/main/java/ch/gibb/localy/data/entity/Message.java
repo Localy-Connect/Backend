@@ -16,7 +16,7 @@ public class Message {
     private String text;
 
     @Column(name = "userId")
-    @OneToOne
+    @OneToOne(mappedBy = "user_id")
     private User user;
 
     public String getId() {

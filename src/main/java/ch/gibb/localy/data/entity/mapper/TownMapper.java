@@ -13,7 +13,6 @@ public class TownMapper {
         town.setId(townDto.getId());
         town.setName(townDto.getName());
         town.setMessages(townDto.getMessages());
-        town.setUsers(townDto.getUsers());
 
         return town;
     }
@@ -24,7 +23,6 @@ public class TownMapper {
         townDto.setId(town.getId());
         townDto.setName(town.getName());
         townDto.setMessages(town.getMessages());
-        townDto.setUsers(town.getUsers());
 
         return townDto;
     }

@@ -17,18 +17,10 @@ public class Town {
 
     @JsonIgnore
     @OneToMany(
-            mappedBy = "user",
+            mappedBy = "message",
             cascade = CascadeType.ALL
     )
     private List<Message> messages;
-
-    @JsonIgnore
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
-    private List<User> users;
-
 
     public String getId() {
         return id;
@@ -52,14 +44,6 @@ public class Town {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     @Override
