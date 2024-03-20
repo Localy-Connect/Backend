@@ -1,7 +1,5 @@
 package ch.gibb.localy.data.dto;
 
-import ch.gibb.localy.data.entity.Town;
-
 public class UserDto {
 
     public String id;
@@ -12,7 +10,7 @@ public class UserDto {
 
     private String phoneNr;
 
-    private Town town;
+    private TownDto town;
 
     private String email;
 
@@ -48,11 +46,11 @@ public class UserDto {
         this.phoneNr = phoneNr;
     }
 
-    public Town getTown() {
+    public TownDto getTown() {
         return town;
     }
 
-    public void setTown(Town town) {
+    public void setTown(TownDto town) {
         this.town = town;
     }
 
