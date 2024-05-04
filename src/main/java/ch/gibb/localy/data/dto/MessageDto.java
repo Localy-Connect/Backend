@@ -1,7 +1,5 @@
 package ch.gibb.localy.data.dto;
 
-import ch.gibb.localy.data.entity.User;
-
 public class MessageDto {
     public String id;
 
@@ -9,7 +7,7 @@ public class MessageDto {
 
     private String text;
 
-    private User user;
+    private UserDto user;
 
     public String getId() {
         return id;
@@ -35,11 +33,11 @@ public class MessageDto {
         this.text = text;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 }

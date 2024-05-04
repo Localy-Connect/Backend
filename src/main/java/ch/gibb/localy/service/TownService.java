@@ -17,9 +17,9 @@ public class TownService {
     @Autowired
     private TownRepository townRepository;
 
-    public Town create(Town town) {
-        townRepository.save(town);
-        return town;
+    public TownDto create(TownDto townDto) {
+        townRepository.save(TownMapper.fromDto(townDto));
+        return townDto;
     }
 
     public List<TownDto> findAll() {

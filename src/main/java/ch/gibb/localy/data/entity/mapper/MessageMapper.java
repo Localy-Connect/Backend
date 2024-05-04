@@ -10,7 +10,7 @@ public class MessageMapper {
 
         message.setId(messageDto.getId());
         message.setTitle(messageDto.getTitle());
-        message.setUser(messageDto.getUser());
+        message.setUser(UserMapper.fromDto(messageDto.getUser()));
 
         return message;
     }
@@ -20,7 +20,7 @@ public class MessageMapper {
 
         messageDto.setId(message.getId());
         messageDto.setTitle(message.getTitle());
-        messageDto.setUser(message.getUser());
+        messageDto.setUser(UserMapper.toDto(message.getUser()));
 
         return messageDto;
     }
