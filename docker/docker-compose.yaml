@@ -1,13 +1,30 @@
-version: '3'
+version: '3.8'
+
 services:
-  localy:
+  postgres:
     image: postgres:latest
-    restart: always
-    ports:
-      - 5432:5432
-    volumes:
-      - ./data:/var/lib/postgresql/data
+    container_name: localy_postgres
     environment:
-      - POSTGRES_DB=localy
-      - POSTGRES_USER=localy
-      - POSTGRES_PASSWORD=localydock
+      POSTGRES_DB: localydb
+      POSTGRES_USER: localyuser
+      POSTGRES_PASSWORD: localysecret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway
+    depends_on:
+      - postgres
+    command: migrate
+    environment:
+      FLYWAY_URL: jdbc:postgresql://postgres:5432/localydb
+      FLYWAY_USER: localyuser
+      FLYWAY_PASSWORD: localysecret
+      FLYWAY_LOCATIONS: filesystem:/flyway/sql
+    volumes:
+      - ./src/main/resources/db.migration:/flyway/sql
+
+volumes:
+  postgres_data:
