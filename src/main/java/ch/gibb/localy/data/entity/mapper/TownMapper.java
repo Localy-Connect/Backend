@@ -12,7 +12,6 @@ import java.util.List;
 public class TownMapper {
     public static Town fromDto(TownDto townDto) {
         Town town = new Town();
-
         town.setId(townDto.getId());
         town.setName(townDto.getName());
         List<Message> messages = new ArrayList<>();
@@ -26,7 +25,6 @@ public class TownMapper {
 
     public static TownDto toDto(Town town) {
         TownDto townDto = new TownDto();
-
         townDto.setId(town.getId());
         townDto.setName(town.getName());
         List<MessageDto> messages = new ArrayList<>();

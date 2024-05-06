@@ -7,7 +7,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public String id;
+    public Long id;
 
     @Column(name = "title")
     private String title;
@@ -15,15 +15,22 @@ public class Message {
     @Column(name = "text")
     private String text;
 
-    @Column(name = "userId")
-    @OneToOne(mappedBy = "user_id")
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public String getId() {
+    @ManyToOne
+    @JoinColumn(name = "town_id")  // Ensure that the column name matches the one in your database
+    private Town town;
+
+    public Message() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

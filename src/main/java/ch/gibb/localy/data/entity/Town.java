@@ -10,23 +10,20 @@ public class Town {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public String id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(
-            mappedBy = "message",
-            cascade = CascadeType.ALL
-    )
+    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
     private List<Message> messages;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

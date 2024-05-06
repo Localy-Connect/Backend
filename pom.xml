@@ -44,6 +44,19 @@
     <build>
         <plugins>
             <plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <configuration>
+                        <url>jdbc:postgresql://localhost:5439/people</url>
+                        <user>localyuser</user>
+                        <password>localysecret</password>
+                        <schemas>
+                            <schema>localy</schema>
+                        </schemas>
+                        <cleanDisabled>false</cleanDisabled>
+                    </configuration>
+                </plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>

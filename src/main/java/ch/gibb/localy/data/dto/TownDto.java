@@ -4,17 +4,17 @@ import java.util.List;
 
 public class TownDto {
 
-    public String id;
+    public Long id;
 
     private String name;
 
     private List<MessageDto> messages;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
