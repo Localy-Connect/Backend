@@ -3,8 +3,7 @@ package ch.gibb.localy.data.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "\"user\"")
+@Entity(name = "person")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

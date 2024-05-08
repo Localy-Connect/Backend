@@ -1,8 +1,4 @@
-create schema localy;
-
-SET search_path TO localy;
-
-CREATE TABLE user
+CREATE TABLE person
 (
     id       SERIAL PRIMARY KEY,
     name     VARCHAR(255) NOT NULL,

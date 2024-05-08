@@ -4,5 +4,5 @@ CREATE TABLE message
     title   VARCHAR(255),
     text    TEXT,
     user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES user (id)
+    FOREIGN KEY (user_id) REFERENCES person (id)
 );
