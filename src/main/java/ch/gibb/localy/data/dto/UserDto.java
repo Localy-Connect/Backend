@@ -2,7 +2,7 @@ package ch.gibb.localy.data.dto;
 
 public class UserDto {
 
-    public String id;
+    public Long id;
 
     private String name;
 
@@ -14,11 +14,11 @@ public class UserDto {
 
     private String email;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

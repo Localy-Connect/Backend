@@ -1,7 +1,7 @@
 package ch.gibb.localy.data.dto;
 
 public class MessageDto {
-    public String id;
+    public Long id;
 
     private String title;
 
@@ -9,11 +9,11 @@ public class MessageDto {
 
     private UserDto user;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -40,14 +40,21 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5432/localydb</url>
+                    <user>localyuser</user>
+                    <password>localysecret</password>
+                    <schemas>
+                        <schema>localy</schema>
+                    </schemas>
+                    <cleanDisabled>false</cleanDisabled>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

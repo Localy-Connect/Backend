@@ -60,7 +60,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(path = "/signup", consumes = "application/json")
     public void signUp(@RequestBody UserDto userDto) {
         try {
             userService.signUp(userDto);
@@ -69,7 +69,7 @@ public class UserController {
         }
     }
 
-    @PostMapping(consumes = "application/json")
+    @PostMapping(path = "/signin", consumes = "application/json")
     public ResponseEntity<?> signIn(@RequestBody LogInDto logIn) {
         try {
             User user = userService.signIn(logIn);

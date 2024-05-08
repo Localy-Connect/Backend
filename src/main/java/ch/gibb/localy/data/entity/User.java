@@ -3,12 +3,12 @@ package ch.gibb.localy.data.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "person")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public String id;
+    public Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -28,11 +28,11 @@ public class User {
     private String email;
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
