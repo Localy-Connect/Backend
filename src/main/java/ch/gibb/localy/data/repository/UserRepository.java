@@ -1,11 +1,12 @@
 package ch.gibb.localy.data.repository;
 
 import ch.gibb.localy.data.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u from User as u where u.id = :id ")
     User findUserById(@Param("id") Integer id);
 

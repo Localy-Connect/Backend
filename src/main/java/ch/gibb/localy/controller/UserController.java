@@ -1,14 +1,14 @@
 package ch.gibb.localy.controller;
 
+import ch.gibb.localy.controller.response.UserResponse;
 import ch.gibb.localy.data.dto.LogInDto;
+import ch.gibb.localy.controller.response.TokenResponse;
 import ch.gibb.localy.data.dto.UserDto;
-import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -61,19 +61,20 @@ public class UserController {
     }
 
     @PostMapping(path = "/signup", consumes = "application/json")
-    public void signUp(@RequestBody UserDto userDto) {
+    public UserResponse signUp(@RequestBody UserDto userDto) {
         try {
-            userService.signUp(userDto);
+            return new UserResponse(userService.signUp(userDto));
+
+
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 
     @PostMapping(path = "/signin", consumes = "application/json")
-    public ResponseEntity<?> signIn(@RequestBody LogInDto logIn) {
+    public TokenResponse signIn(@RequestBody LogInDto logIn) {
         try {
-            User user = userService.signIn(logIn);
-            return ResponseEntity.ok(user);
+            return new TokenResponse(userService.signIn(logIn));
         } catch (
                 DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
