@@ -2,6 +2,7 @@ package ch.gibb.localy.service;
 
 import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
+import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.MessageMapper;
 import ch.gibb.localy.data.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ public class MessageService {
     private MessageRepository messageRepository;
 
 
-    public MessageDto create(MessageDto messageDto) {
-        messageRepository.save(MessageMapper.fromDto(messageDto));
+    public MessageDto create(User user, MessageDto messageDto) {
+        Message message = MessageMapper.fromDto(messageDto);
+        message.setUser(user);
+        messageRepository.save(message);
         return messageDto;
     }
 

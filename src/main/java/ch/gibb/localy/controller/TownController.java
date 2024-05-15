@@ -1,6 +1,7 @@
 package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.TownDto;
+import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

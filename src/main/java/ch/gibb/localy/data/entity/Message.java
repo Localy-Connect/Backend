@@ -2,7 +2,7 @@ package ch.gibb.localy.data.entity;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Message {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "town_id")  // Ensure that the column name matches the one in your database
+    @JoinColumn(name = "town_id")
     private Town town;
 
     public Message() {
@@ -57,6 +57,7 @@ public class Message {
     public void setUser(User user) {
         this.user = user;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -12,7 +12,9 @@ public class UserMapper {
         user.setName(userDto.getName());
         user.setPassword(userDto.getPassword());
         user.setPhoneNr(userDto.getPhoneNr());
-        user.setTown(TownMapper.fromDto(userDto.getTown()));
+        if (userDto.getTown() != null){
+            user.setTown(TownMapper.fromDto(userDto.getTown()));
+        }
         user.setEmail(userDto.getEmail());
 
         return user;
@@ -25,7 +27,9 @@ public class UserMapper {
         userDto.setName(user.getName());
         userDto.setPassword(user.getPassword());
         userDto.setPhoneNr(user.getPhoneNr());
-        userDto.setTown(TownMapper.toDto(user.getTown()));
+        if (user.getTown() != null){
+            userDto.setTown(TownMapper.toDto(user.getTown()));
+        }
         userDto.setEmail(user.getEmail());
 
         return userDto;

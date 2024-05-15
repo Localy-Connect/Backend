@@ -14,12 +14,13 @@ public class TownMapper {
         Town town = new Town();
         town.setId(townDto.getId());
         town.setName(townDto.getName());
-        List<Message> messages = new ArrayList<>();
-        for (MessageDto m : townDto.getMessages()) {
-            messages.add(MessageMapper.fromDto(m));
+        if (townDto.getMessages() != null){
+            List<Message> messages = new ArrayList<>();
+            for (MessageDto m : townDto.getMessages()) {
+                messages.add(MessageMapper.fromDto(m));
+            }
+            town.setMessages(messages);
         }
-        town.setMessages(messages);
-
         return town;
     }
 
@@ -27,12 +28,14 @@ public class TownMapper {
         TownDto townDto = new TownDto();
         townDto.setId(town.getId());
         townDto.setName(town.getName());
-        List<MessageDto> messages = new ArrayList<>();
-        for (Message m : town.getMessages()) {
-            messages.add(MessageMapper.toDto(m));
-        }
-        townDto.setMessages(messages);
+        if (town.getMessages() != null){
+            List<MessageDto> messages = new ArrayList<>();
+            for (Message m : town.getMessages()) {
+                messages.add(MessageMapper.toDto(m));
+            }
+            townDto.setMessages(messages);
 
+        }
         return townDto;
     }
 

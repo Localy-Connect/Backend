@@ -2,6 +2,7 @@ package ch.gibb.localy.service;
 
 import ch.gibb.localy.data.dto.TownDto;
 import ch.gibb.localy.data.entity.Town;
+import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.TownMapper;
 import ch.gibb.localy.data.repository.TownRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,8 +10,9 @@ public class MessageMapper {
 
         message.setId(messageDto.getId());
         message.setTitle(messageDto.getTitle());
-        message.setUser(UserMapper.fromDto(messageDto.getUser()));
-
+        if (messageDto.getUser() != null) {
+            message.setUser(UserMapper.fromDto(messageDto.getUser()));
+        }
         return message;
     }
 
@@ -21,7 +22,9 @@ public class MessageMapper {
         messageDto.setId(message.getId());
         messageDto.setTitle(message.getTitle());
         messageDto.setUser(UserMapper.toDto(message.getUser()));
-
+        if (message.getUser() != null) {
+            messageDto.setUser(UserMapper.toDto(message.getUser()));
+        }
         return messageDto;
     }
 

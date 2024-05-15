@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserService {
@@ -29,28 +28,30 @@ public class UserService {
     }
 
     public Token signIn(LogInDto logInDto) {
-        User user = userRepository.findByName(logInDto.getName());
+        User user = userRepository.findByName(logInDto.getName()).orElse(null);
+
         if (user == null || !passwordEncoder.matches(logInDto.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("invalid name or password");
+            throw new IllegalArgumentException("Invalid username or password");
         }
+
         return tokenService.generateToken(user);
     }
 
-    public User signUp(UserDto userDto) {
-        if (userRepository.findByName(userDto.getName()) != null) {
-            throw new IllegalArgumentException("User with this name already exists");
+    public void signUp(UserDto userDto) {
+        if (userRepository.findByName(userDto.getName()).isPresent()) {
+            throw new IllegalArgumentException("User with this username already exists");
         }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        return userRepository.save(UserMapper.fromDto(userDto));
+        userRepository.save(UserMapper.fromDto(userDto));
     }
 
     public List<UserDto> findAll() {
-        List<UserDto> towns = new ArrayList<>();
+        List<UserDto> list = new ArrayList<>();
         for (User u : userRepository.findAll()) {
-            towns.add(UserMapper.toDto(u));
+            list.add(UserMapper.toDto(u));
         }
-        return towns;
+        return list;
     }
 
     public UserDto findById(Integer id) {

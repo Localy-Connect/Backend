@@ -60,25 +60,4 @@ public class UserController {
         }
     }
 
-    @PostMapping(path = "/signup", consumes = "application/json")
-    public UserResponse signUp(@RequestBody UserDto userDto) {
-        try {
-            return new UserResponse(userService.signUp(userDto));
-
-
-        } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
-    }
-
-    @PostMapping(path = "/signin", consumes = "application/json")
-    public TokenResponse signIn(@RequestBody LogInDto logIn) {
-        try {
-            return new TokenResponse(userService.signIn(logIn));
-        } catch (
-                DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
-    }
-
 }

@@ -1,6 +1,7 @@
 package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.MessageDto;
+import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -60,7 +61,7 @@ public class MessageController {
     @PostMapping(consumes = "application/json")
     public void create(@RequestBody MessageDto townDto) {
         try {
-            messageService.create(townDto);
+            messageService.create(AuthInfo.getUser(), townDto);
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
