@@ -27,8 +27,9 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public Token signIn(LogInDto logInDto) {
-        User user = userRepository.findByName(logInDto.getName()).orElse(null);
+        User user = userRepository.findByName(logInDto.getName());
 
         if (user == null || !passwordEncoder.matches(logInDto.getPassword(), user.getPassword())) {
             throw new IllegalArgumentException("Invalid username or password");
@@ -38,11 +39,10 @@ public class UserService {
     }
 
     public void signUp(UserDto userDto) {
-        if (userRepository.findByName(userDto.getName()).isPresent()) {
+        if (userRepository.findByName(userDto.getName()) != null) {
             throw new IllegalArgumentException("User with this username already exists");
         }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-
         userRepository.save(UserMapper.fromDto(userDto));
     }
 
@@ -54,7 +54,7 @@ public class UserService {
         return list;
     }
 
-    public UserDto findById(Integer id) {
+    public UserDto findById(Long id) {
         return UserMapper.toDto(userRepository.findById(id).orElseThrow());
     }
 
@@ -62,7 +62,7 @@ public class UserService {
         userRepository.save(UserMapper.fromDto(userDto));
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 

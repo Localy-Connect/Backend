@@ -44,7 +44,7 @@ public class TokenService {
         try {
             var claims = Jwts.parserBuilder().setSigningKey(SIGNING_KEY).build().parseClaimsJws(token).getBody();
             var userId = Integer.parseInt(claims.getSubject());
-            return userRepository.findById(userId).map(user -> new Token(token, user));
+            return userRepository.findById((long) userId).map(user -> new Token(token, user));
         } catch (JwtException e) {
             return Optional.empty();
         }

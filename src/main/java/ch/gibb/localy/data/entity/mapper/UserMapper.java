@@ -1,6 +1,7 @@
 package ch.gibb.localy.data.entity.mapper;
 
 
+import ch.gibb.localy.data.dto.TownDto;
 import ch.gibb.localy.data.dto.UserDto;
 import ch.gibb.localy.data.entity.User;
 
@@ -27,8 +28,11 @@ public class UserMapper {
         userDto.setName(user.getName());
         userDto.setPassword(user.getPassword());
         userDto.setPhoneNr(user.getPhoneNr());
-        if (user.getTown() != null){
-            userDto.setTown(TownMapper.toDto(user.getTown()));
+        if (user.getTown() != null) {
+            TownDto townDto = new TownDto();
+            townDto.setId(user.getTown().getId());
+            townDto.setName(user.getTown().getName());
+            userDto.setTown(townDto);
         }
         userDto.setEmail(user.getEmail());
 

@@ -1,9 +1,7 @@
 package ch.gibb.localy.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.List;
+import java.util.Set;
 
 @Entity(name = "town")
 public class Town {
@@ -12,12 +10,16 @@ public class Town {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL)
-    private List<Message> messages;
+    @OneToMany(mappedBy = "town", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> messages;
+
+    @OneToMany(mappedBy = "town")
+    private Set<User> users;
+
+    // Getters and setters...
 
     public Long getId() {
         return id;
@@ -35,26 +37,19 @@ public class Town {
         this.name = name;
     }
 
-    public List<Message> getMessages() {
+    public Set<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message = (Message) o;
-
-        return id.equals(message.id);
+    public Set<User> getUsers() {
+        return users;
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

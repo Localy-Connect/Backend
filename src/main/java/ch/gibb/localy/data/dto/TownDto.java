@@ -1,14 +1,12 @@
 package ch.gibb.localy.data.dto;
 
-import java.util.List;
+import java.util.Set;
 
 public class TownDto {
 
-    public Long id;
-
+    private Long id;
     private String name;
-
-    private List<MessageDto> messages;
+    private Set<MessageDto> messages;
 
     public Long getId() {
         return id;
@@ -26,11 +24,11 @@ public class TownDto {
         this.name = name;
     }
 
-    public List<MessageDto> getMessages() {
+    public Set<MessageDto> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<MessageDto> messages) {
+    public void setMessages(Set<MessageDto> messages) {
         this.messages = messages;
     }
 }
