@@ -1,8 +1,13 @@
 package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.MessageDto;
+import ch.gibb.localy.data.dto.TownDto;
+import ch.gibb.localy.data.entity.Town;
+import ch.gibb.localy.data.entity.User;
+import ch.gibb.localy.data.entity.mapper.TownMapper;
 import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.MessageService;
+import ch.gibb.localy.service.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,6 +25,9 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private TownService townService;
 
 
     @GetMapping("/{id}")
@@ -50,22 +58,20 @@ public class MessageController {
     }
 
     @PutMapping(consumes = "application/json")
-    public void update(@RequestBody MessageDto townDto) {
+    public void update(@RequestBody MessageDto messageDto) {
         try {
-            messageService.update(townDto);
+            TownDto town = townService.findById(messageDto.getTownId().intValue());
+            messageService.update(messageDto, TownMapper.fromDto(town));
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 
-    @PostMapping(consumes = "application/json")
-    public void create(@RequestBody MessageDto townDto) {
-        try {
-            messageService.create(AuthInfo.getUser(), townDto);
-        } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
+    @PostMapping
+    public MessageDto createMessage(@RequestBody MessageDto messageDto) {
+        User user = AuthInfo.getUser();
+        TownDto town = townService.findById(messageDto.getTownId().intValue());
+        return messageService.createMessage(messageDto, user, TownMapper.fromDto(town));
     }
-
 
 }
