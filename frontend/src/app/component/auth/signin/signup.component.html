@@ -1,24 +1,42 @@
-<div class="signup-container">
-  <h2>Signup</h2>
-  <form (ngSubmit)="signup()">
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" [(ngModel)]="user.name" name="name" required>
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" [(ngModel)]="user.email" name="email" required>
-    </div>
-    <div>
-      <label for="phoneNr">Phone Number:</label>
-      <input type="text" id="phoneNr" [(ngModel)]="user.phoneNr" name="phoneNr" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
-    </div>
-    <button type="submit">Signup</button>
-  </form>
-  <p>Already have an account? <a routerLink="/signin">Sign in here</a></p>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
-</div>
+<mat-card class="auth-card">
+  <mat-card-title>Sign Up</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name">
+        <mat-error *ngIf="signupForm.controls['name'].invalid && signupForm.controls['name'].touched">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="example@domain.com">
+        <mat-error *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNr" type="tel" placeholder="Enter your phone number">
+        <mat-error *ngIf="signupForm.controls['phoneNr'].invalid && signupForm.controls['phoneNr'].touched">
+          Phone Number is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" placeholder="Enter your password">
+        <mat-error *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+    </form>
+    <p>Already have an account? <a routerLink="/signin">Sign In</a></p>
+    <p style="color: red" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </mat-card-content>
+</mat-card>
