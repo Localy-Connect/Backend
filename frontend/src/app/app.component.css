@@ -43,3 +43,11 @@ footer {
   text-align: center;
   padding: 0.5rem;
 }
+
+.nav-right {
+  float: right;
+}
+
+footer a {
+  color: white;
+}

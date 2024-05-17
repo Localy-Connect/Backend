@@ -1,0 +1,13 @@
+<div class="profile-container" *ngIf="user">
+  <div class="profile-card">
+    <div class="profile-details">
+      <h2>{{ user.name }}</h2>
+      <p>Email: {{ user.email }}</p>
+      <p>Phone: {{ user.phoneNr }}</p>
+      <p>Address: {{ user.town }}</p>
+    </div>
+  </div>
+</div>
+<div *ngIf="!user" class="loading">
+  Loading...
+</div>

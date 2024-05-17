@@ -1,11 +1,16 @@
 <div class="container">
   <header>
-    <h1>Welcome to Localy</h1>
+    <h1 (click)="home()">Welcome to Localy</h1>
+    <nav class="nav-right" *ngIf="isLoggedIn">
+      <a (click)="profile()">Profile</a>
+      <a (click)="logout()">Logout</a>
+    </nav>
   </header>
   <main>
     <router-outlet></router-outlet>
   </main>
   <footer>
     <p>&copy; 2024 Localy</p>
+    <a (click)="help()">Help</a>
   </footer>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SigninResponse, SignupResponse, User } from './auth.models';
 
@@ -10,14 +10,25 @@ import { SigninResponse, SignupResponse, User } from './auth.models';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/auth';
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  private currentUser = new BehaviorSubject<User | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+    const token = this.getToken();
+    const user = this.getUser();
+    if (token && user) {
+      this.loggedIn.next(true);
+      this.currentUser.next(user);
+    }
+  }
 
   signin(credentials: { name: string; password: string }): Observable<SigninResponse> {
     return this.http.post<SigninResponse>(`${this.apiUrl}/signin`, credentials).pipe(
       tap(response => {
         this.setToken(response.token);
         this.setUser(response.user);
+        this.loggedIn.next(true);
+        this.currentUser.next(response.user);
         if (response.user.town) {
           this.router.navigate([`/town/${response.user.town.id}`]);
         } else {
@@ -38,11 +49,13 @@ export class AuthService {
   logout(): void {
     this.removeToken();
     this.removeUser();
+    this.loggedIn.next(false);
+    this.currentUser.next(null);
     this.router.navigate(['/signin']);
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 
   private setToken(token: string): void {
@@ -73,9 +86,5 @@ export class AuthService {
   getUserTownId(): string | null {
     const user = this.getUser();
     return user && user.town ? user.town.id.toString() : null;
-  }
-
-  isLoggedIn(): boolean {
-    return this.isAuthenticated() && !!this.getUserTownId();
   }
 }

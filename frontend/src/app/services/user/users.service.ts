@@ -13,7 +13,6 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
-  // For Profile and the id from the user who is logged in
   getUserById(id: number): Observable<User> {
     return this.http.get<User>(this.usersUrl + "/" + id);
   }

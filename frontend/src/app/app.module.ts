@@ -16,7 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {AppRoutingModule} from "./app-routing.module";
 import {RouterLinkWithHref} from "@angular/router";
 import {TownComponent} from "./component/town/town.component";
-import {ProfileComponent} from "./component/user/profile.component";
+import {ProfileComponent} from "./component/profile/profile.component";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
