@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
   joinTown(townId: number): void {
     this.townService.joinTown(townId).subscribe({
       next: () => {
-        window.location.reload();
+        this.authService.logout();
       },
       error: (err) => {
         console.error('Error joining town', err);

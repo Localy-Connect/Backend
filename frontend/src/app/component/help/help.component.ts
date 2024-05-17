@@ -12,7 +12,7 @@ export class HelpComponent {
     isTroubleshootingExpanded: false,
   };
 
-  email: string = "demo@email.com";
+  email: string = "lsc132428@stud.gibb.ch";
   supportAvailability: string = "29.05.2024";
 
   languages = ['English', 'Deutsch'];
