@@ -1,60 +1,51 @@
 <div class="help-overview">
-  <h1>Benutzerhandbuch</h1>
+  <div class="header">
+    <h1>{{ getContent().title }}</h1>
+    <div class="language-selector">
+      <label for="language">Language:</label>
+      <select id="language" [(ngModel)]="selectedLanguage" (change)="changeLanguage(selectedLanguage)">
+        <option *ngFor="let language of languages" [value]="language">{{ language }}</option>
+      </select>
+    </div>
+  </div>
   <ul>
     <li (click)="toggleSection('isIntroductionExpanded')">
-      Einleitung
+      {{ getContent().introduction }}
       <span [class]="sectionStates['isIntroductionExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
     </li>
     <li *ngIf="sectionStates['isIntroductionExpanded']">
-      <p>Willkommen zum Benutzerhandbuch für unser System. Dieses Handbuch soll Ihnen helfen, das System effektiv zu nutzen und eventuelle Probleme zu beheben.</p>
+      <p>{{ getContent().introduction }}</p>
     </li>
 
     <li (click)="toggleSection('isInstructionsExpanded')">
-      Bedienungsanleitung
+      {{ getContent().instructions.title }}
       <span [class]="sectionStates['isInstructionsExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
     </li>
     <li *ngIf="sectionStates['isInstructionsExpanded']">
-      <h3>Anmelden</h3>
+      <h3>{{ getContent().instructions.login.title }}</h3>
       <ol>
-        <li>Öffnen Sie die Webseite.</li>
-        <li>Geben Sie Ihren Benutzernamen und Ihr Passwort ein.</li>
-        <li>Klicken Sie auf "Sign In".</li>
-        <li>Falls Sie noch keinen Account haben, klicken Sie auf "Sign Up" im Sign-In-Bereich.</li>
+        <li *ngFor="let step of getContent().instructions.login.steps">{{ step }}</li>
       </ol>
 
-      <h3>Navigation</h3>
+      <h3>{{ getContent().instructions.navigation.title }}</h3>
       <ul>
-        <li>Um Ihre Account-Daten anzusehen, klicken Sie auf "Profile".</li>
-        <li>Um das Benutzerhandbuch erneut anzusehen, klicken Sie im Footer auf "Help".</li>
-        <li>Um zur Hauptfunktion zurückzukehren, klicken Sie im Header auf "Localy".</li>
-        <ul>
-          <li>Benutzer ohne zugeordnete Stadt werden zu einer Übersicht aller Städte weitergeleitet.</li>
-          <li>Benutzer mit einer zugeordneten Stadt werden zu ihrer Stadt weitergeleitet, wo alle Nachrichten angezeigt werden.</li>
-        </ul>
+        <li *ngFor="let step of getContent().instructions.navigation.steps">{{ step }}</li>
       </ul>
 
-      <h3>Funktionen</h3>
+      <h3>{{ getContent().instructions.functionalities.title }}</h3>
       <ul>
-        <li><b>Sign In:</b> Anmeldung mit Ihrem Account.</li>
-        <li><b>Sign Out:</b> Abmeldung von Ihrem Account.</li>
-        <li><b>Join a Town:</b> Einer Stadt beitreten.</li>
-        <li><b>Write a Message:</b> Eine Nachricht in einer Stadt schreiben.</li>
-        <li><b>View Town Messages:</b> Nachrichten in der Stadt ansehen.</li>
-        <li><b>View Profile:</b> Ihre persönlichen Daten ansehen.</li>
-        <li><b>View All Towns:</b> Alle verfügbaren Städte ansehen.</li>
+        <li *ngFor="let item of getContent().instructions.functionalities.items">{{ item }}</li>
       </ul>
     </li>
 
     <li (click)="toggleSection('isTroubleshootingExpanded')">
-      Fehlerbehebung
+      {{ getContent().troubleshooting.title }}
       <span [class]="sectionStates['isTroubleshootingExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
     </li>
     <li *ngIf="sectionStates['isTroubleshootingExpanded']">
-      <h3>Fehlerbehebung</h3>
+      <h3>{{ getContent().troubleshooting.title }}</h3>
       <ol>
-        <li>Wenn ein Fehler auftritt, laden Sie die Webseite neu.</li>
-        <li>Falls der Fehler weiterhin besteht, melden Sie sich erneut an und versuchen Sie es nochmals.</li>
-        <li>Wenn das Problem weiterhin besteht, senden Sie eine E-Mail mit einem Screenshot des Fehlers und einer Beschreibung, wie es dazu kam, an <a href="mailto:{{email}}">{{email}}</a> (Support Verfügbarkeit bis {{supportAvailability}}).</li>
+        <li *ngFor="let step of getContent().troubleshooting.steps">{{ step }}</li>
       </ol>
     </li>
   </ul>

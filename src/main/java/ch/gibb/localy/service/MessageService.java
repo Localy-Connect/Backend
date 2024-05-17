@@ -41,6 +41,11 @@ public class MessageService {
                 .collect(Collectors.toList());
     }
 
+    public List<MessageDto> findAllMessageFromTown(Integer id) {
+        return messageRepository.findByTownId(id).stream()
+                .map(MessageMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
     public MessageDto findById(Integer id) {
         return MessageMapper.toDto(messageRepository.findById(id).orElseThrow());

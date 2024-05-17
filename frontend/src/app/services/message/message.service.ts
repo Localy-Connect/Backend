@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Town} from "../../model/model";
+import {Message} from "../../model/model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,10 @@ export class MessageService {
 
 
   constructor(private http: HttpClient) {
+  }
+
+  getAllMessageFromTown(id: number): Observable<Message> {
+    return this.http.get<Message>(this.messageUrl + "/byTownId/" + id);
   }
 
   createMessage(title: string, text: string, townId: number): Observable<any> {

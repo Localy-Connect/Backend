@@ -48,6 +48,15 @@ public class MessageController {
         }
     }
 
+    @GetMapping("byTownId/{id}")
+    public List<MessageDto> findAllMessageFromTown(@PathVariable Integer id) {
+        try {
+            return messageService.findAllMessageFromTown(id);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ApplicationUser could not be deleted");
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         try {

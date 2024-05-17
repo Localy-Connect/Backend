@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TownService } from "../../services/town/town.service";
-import { AuthService } from "../../services/auth/auth.service";
-import { MessageService } from "../../services/message/message.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {TownService} from "../../services/town/town.service";
+import {AuthService} from "../../services/auth/auth.service";
+import {MessageService} from "../../services/message/message.service";
+import {Message} from "../../model/model";
 
 @Component({
   selector: 'app-town',
@@ -11,7 +12,7 @@ import { MessageService } from "../../services/message/message.service";
 })
 export class TownComponent implements OnInit {
   town: any;
-  messages: any[] = [];
+  messages: any;
   messageTitle: string = '';
   messageText: string = '';
 
@@ -20,7 +21,8 @@ export class TownComponent implements OnInit {
     private townService: TownService,
     private authService: AuthService,
     private messageService: MessageService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadTown();
@@ -31,8 +33,10 @@ export class TownComponent implements OnInit {
     if (typeof townId === "string") {
       this.townService.getTownById(parseInt(townId)).subscribe((town) => {
         this.town = town;
-        this.messages = town.messages;
       });
+      this.messageService.getAllMessageFromTown(parseInt(townId)).subscribe((messages) => {
+        this.messages = messages
+      })
     }
   }
 
