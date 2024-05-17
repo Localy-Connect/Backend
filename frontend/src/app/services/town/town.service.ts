@@ -21,7 +21,16 @@ export class TownService {
     return this.http.get<Town>(this.townsUrl + "/" + id);
   }
 
+  createTown(name: string): Observable<any> {
+    const town = { name };
+    return this.http.post<any>(`${this.townsUrl}`, town);
+  }
+
   joinTown(townId: number): Observable<Town> {
     return this.http.get<Town>(this.townsUrl + "/" + townId + "/join");
+  }
+
+  leaveTown(townId: number): Observable<Town> {
+    return this.http.get<Town>(this.townsUrl + "/" + townId + "/leave");
   }
 }

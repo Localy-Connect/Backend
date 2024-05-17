@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface TownRepository extends JpaRepository<Town, Integer> {
+
+    Optional<Town> findByName(String name);
 }

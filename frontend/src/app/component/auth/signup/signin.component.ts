@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../../../services/auth/auth.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signin',
@@ -8,15 +10,34 @@ import { AuthService } from "../../../services/auth/auth.service";
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  user: { name: string; password: string } = { name: '', password: '' };
   errorMessage: string = '';
+  signinForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    this.signinForm = this.fb.group({
+      name: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
 
-  signin(): void {
-    this.authService.signin(this.user).subscribe(
-      () => this.router.navigate(['/home']),
-      () => this.errorMessage = 'SignIn failed'
-    );
+  onSubmit(): void {
+    if (this.signinForm.invalid) {
+      return;
+    }
+
+    const user = {
+      name: this.signinForm.value.name,
+      password: this.signinForm.value.password
+    };
+
+    const observer = {
+      next: () => this.router.navigate(['/home']),
+      error: () => this.errorMessage = 'SignIn failed',
+      complete: () => console.log('SignIn request completed')
+    };
+
+    this.authService.signin(user).pipe(
+      tap(() => { })
+    ).subscribe(observer);
   }
 }

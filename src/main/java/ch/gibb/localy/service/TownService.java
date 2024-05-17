@@ -25,8 +25,11 @@ public class TownService {
     private UserRepository userRepository;
 
     public TownDto createTown(TownDto townDto, User user) {
-        Town town = TownMapper.fromDto(townDto);
+        if (townRepository.findByName(townDto.getName()).isPresent()) {
+            throw new IllegalArgumentException("Town with name " + townDto.getName() + " already exists");
+        }
 
+        Town town = TownMapper.fromDto(townDto);
         townRepository.save(town);
         return TownMapper.toDto(town);
     }
@@ -58,6 +61,19 @@ public class TownService {
                 .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
         town.getUsers().add(user);
         user.setTown(town);
+        userRepository.save(user);
+        TownMapper.toDto(townRepository.save(town));
+    }
+
+    @Transactional
+    public void leaveTown(Integer townId, User user) {
+        if (user.getTown() == null) {
+            throw new IllegalArgumentException("User is not in a Town");
+        }
+        Town town = townRepository.findById(townId)
+                .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
+        town.getUsers().remove(user);
+        user.setTown(null);
         userRepository.save(user);
         TownMapper.toDto(townRepository.save(town));
     }

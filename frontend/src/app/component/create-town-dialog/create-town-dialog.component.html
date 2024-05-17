@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Create Town</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="townName" placeholder="Town Name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="townName">Create</button>
+</div>

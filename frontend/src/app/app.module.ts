@@ -19,6 +19,14 @@ import {TownComponent} from "./component/town/town.component";
 import {ProfileComponent} from "./component/profile/profile.component";
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {CreateTownDialogComponent} from "./component/create-town-dialog/create-town-dialog.component";
+import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
+import {MatDialogActions, MatDialogClose} from "@angular/material/dialog";
+import {MatButton, MatButtonModule} from "@angular/material/button";
+import {MatCard, MatCardContent, MatCardModule, MatCardTitle} from "@angular/material/card";
+import {MatInputModule} from "@angular/material/input";
+import {MatListModule} from "@angular/material/list";
+import {MatLine} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -28,7 +36,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     SigninComponent,
     SignupComponent,
     TownComponent,
-    ProfileComponent
+    ProfileComponent,
+    CreateTownDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,11 +45,22 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormField,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+    MatCardContent,
+    MatCardTitle,
+    MatCard,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatListModule,
+    MatLine
   ],
   providers: [
     AuthService,

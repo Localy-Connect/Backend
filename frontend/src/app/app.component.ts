@@ -30,7 +30,6 @@ export class AppComponent implements OnInit {
   }
 
   signin() {
-    this.authService.logout();
     this.router.navigate(['/signin']);
   }
 

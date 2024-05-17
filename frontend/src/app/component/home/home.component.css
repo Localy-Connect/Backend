@@ -1,8 +1,33 @@
-ul {
-  list-style: none;
-  padding: 0;
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
 }
 
-li {
-  margin: 0.5rem 0;
+h2 {
+  margin-bottom: 1rem;
+}
+
+button {
+  align-content: end;
+}
+
+.mat-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.mat-list-item:last-child {
+  border-bottom: none;
+}
+
+.mat-list {
+  width: 100%;
+  max-width: 500px;
 }

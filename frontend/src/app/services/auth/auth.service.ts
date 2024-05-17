@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { SigninResponse, SignupResponse, User } from './auth.models';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {SigninResponse, SignupResponse, User} from './auth.models';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class AuthService {
     );
   }
 
-  signup(user: { password: string; phoneNr: string; name: string; email: string }): Observable<SignupResponse> {
+  signup(user: { name: string; email: string; phoneNr: string; password: string }): Observable<SignupResponse> {
     return this.http.post<SignupResponse>(`${this.apiUrl}/signup`, user).pipe(
       tap(() => {
         this.router.navigate(['/signin']);

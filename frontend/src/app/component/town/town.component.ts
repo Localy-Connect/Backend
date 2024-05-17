@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TownService} from "../../services/town/town.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {MessageService} from "../../services/message/message.service";
-import {Message} from "../../model/model";
 
 @Component({
   selector: 'app-town',
@@ -20,8 +19,7 @@ export class TownComponent implements OnInit {
     private route: ActivatedRoute,
     private townService: TownService,
     private authService: AuthService,
-    private messageService: MessageService
-  ) {
+    private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -38,6 +36,13 @@ export class TownComponent implements OnInit {
         this.messages = messages
       })
     }
+  }
+
+
+  leaveTown(townId: number): void {
+    this.townService.leaveTown(townId).subscribe(() => {
+      this.authService.logout();
+    });
   }
 
   createMessage(): void {

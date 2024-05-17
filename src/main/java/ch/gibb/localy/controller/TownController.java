@@ -71,4 +71,10 @@ public class TownController {
         User userId = AuthInfo.getUser();
         townService.joinTown(id, userId);
     }
+
+    @GetMapping("/{id}" + "/leave")
+    public void leaveTown(@PathVariable Integer id) {
+        User userId = AuthInfo.getUser();
+        townService.leaveTown(id, userId);
+    }
 }
