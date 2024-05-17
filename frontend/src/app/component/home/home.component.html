@@ -1,0 +1,12 @@
+<div class="home-container">
+
+  <div *ngIf="!userTownId">
+    <h2>Available Towns</h2>
+    <ul>
+      <li *ngFor="let town of towns" class="town-list-item">
+        {{ town.name }}
+        <button (click)="joinTown(town.id)">Join</button>
+      </li>
+    </ul>
+  </div>
+</div>

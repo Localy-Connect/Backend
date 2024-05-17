@@ -67,8 +67,8 @@ public class TownController {
 
 
     @GetMapping("/{id}" + "/join")
-    public TownDto joinTown(@PathVariable Integer id) {
+    public void joinTown(@PathVariable Integer id) {
         User userId = AuthInfo.getUser();
-        return townService.joinTown(id, userId);
+        townService.joinTown(id, userId);
     }
 }

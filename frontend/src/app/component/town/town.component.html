@@ -1,0 +1,22 @@
+<div class="town-container">
+  <h2>{{ town.name }}</h2>
+  <div class="chat-window">
+    <div class="message" *ngFor="let message of messages">
+      <strong>{{ message.title }}</strong>
+      <p>{{ message.text }}</p>
+    </div>
+  </div>
+  <div class="message-form">
+    <form (ngSubmit)="createMessage()">
+      <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" [(ngModel)]="messageTitle" name="title" required>
+      </div>
+      <div>
+        <label for="text">Text:</label>
+        <textarea id="text" [(ngModel)]="messageText" name="text" required></textarea>
+      </div>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>

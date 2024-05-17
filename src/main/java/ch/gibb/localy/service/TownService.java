@@ -49,14 +49,17 @@ public class TownService {
         townRepository.deleteById(id);
     }
 
-    public TownDto joinTown(Integer townId, User user) {
+    @Transactional
+    public void joinTown(Integer townId, User user) {
         if (user.getTown() != null) {
             throw new IllegalArgumentException("User is already in a Town");
         }
         Town town = townRepository.findById(townId)
                 .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
         town.getUsers().add(user);
-        return TownMapper.toDto(townRepository.save(town));
+        user.setTown(town);
+        userRepository.save(user);
+        TownMapper.toDto(townRepository.save(town));
     }
 }
 

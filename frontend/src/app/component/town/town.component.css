@@ -1,0 +1,49 @@
+.town-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+h2 {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.chat-window {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.message {
+  margin-bottom: 16px;
+}
+
+.message strong {
+  display: block;
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: #f9f9f9;
+}
+
+.message-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-form div {
+  margin-bottom: 8px;
+}
+
+.message-form button {
+  align-self: flex-end;
+}
