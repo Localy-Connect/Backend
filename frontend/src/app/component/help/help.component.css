@@ -1,0 +1,62 @@
+.help-overview {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.help-overview h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.help-overview ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.help-overview li {
+  cursor: pointer;
+  margin: 5px 0;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.help-overview li ul {
+  margin-left: 20px;
+  list-style-type: disc;
+}
+
+.arrow-right::after {
+  content: '►';
+  float: right;
+}
+
+.arrow-down::after {
+  content: '▼';
+  float: right;
+}
+
+.help-section h2 {
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+
+.help-section h3 {
+  font-size: 1.2em;
+  margin-top: 15px;
+}
+
+.help-section ul,
+.help-section ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.help-section a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.help-section a:hover {
+  text-decoration: underline;
+}

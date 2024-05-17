@@ -5,6 +5,10 @@
       <a (click)="profile()">Profile</a>
       <a (click)="logout()">Logout</a>
     </nav>
+    <nav class="nav-right" *ngIf="!isLoggedIn">
+      <a (click)="signin()">SignIn</a>
+      <a (click)="signup()">SignUp</a>
+    </nav>
   </header>
   <main>
     <router-outlet></router-outlet>

@@ -13,7 +13,7 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
-  getUserById(id: number): Observable<User> {
+  getUserById(id: number | undefined): Observable<User> {
     return this.http.get<User>(this.usersUrl + "/" + id);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { User } from '../../model/model';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { User } from '../../services/auth/auth.models';
 import {UsersService} from "../../services/user/users.service";
 
 @Component({
@@ -9,17 +10,32 @@ import {UsersService} from "../../services/user/users.service";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: User | undefined;
+  user: User | null = null;
 
   constructor(
-    private usersService: UsersService,
-    private route: ActivatedRoute
-  ) {}
+    private authService: AuthService,
+    private userService: UsersService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    const userId = Number(this.route.snapshot.paramMap.get('id'));
-    this.usersService.getUserById(userId).subscribe((user) => {
-      this.user = user;
+    this.authService.isLoggedIn().subscribe(loggedIn => {
+      if (!loggedIn) {
+        this.router.navigate(['/signin']);
+      } else {
+        this.fetchUserData();
+      }
     });
+  }
+
+  fetchUserData(): void {
+    this.userService.getUserById(this.authService.getUser()?.id).subscribe(
+      data => {
+        this.user = data;
+      },
+      error => {
+        console.error('Error fetching user data:', error);
+      }
+    );
   }
 }
