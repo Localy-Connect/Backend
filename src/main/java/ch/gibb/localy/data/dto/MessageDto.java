@@ -1,13 +1,10 @@
 package ch.gibb.localy.data.dto;
 
 public class MessageDto {
-    public Long id;
-
+    private Long id;
     private String title;
-
     private String text;
-
-    private UserDto user;
+    private Long townId;
 
     public Long getId() {
         return id;
@@ -33,11 +30,11 @@ public class MessageDto {
         this.text = text;
     }
 
-    public UserDto getUser() {
-        return user;
+    public Long getTownId() {
+        return townId;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setTownId(Long townId) {
+        this.townId = townId;
     }
 }

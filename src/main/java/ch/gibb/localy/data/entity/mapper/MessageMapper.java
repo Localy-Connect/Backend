@@ -1,28 +1,25 @@
 package ch.gibb.localy.data.entity.mapper;
 
-
 import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
+import ch.gibb.localy.data.entity.Town;
 
 public class MessageMapper {
-    public static Message fromDto(MessageDto messageDto) {
+    public static MessageDto toDto(Message message) {
+        MessageDto dto = new MessageDto();
+        dto.setId(message.getId());
+        dto.setTitle(message.getTitle());
+        dto.setText(message.getText());
+        dto.setTownId(message.getTown() != null ? message.getTown().getId() : null);
+        return dto;
+    }
+
+    public static Message fromDto(MessageDto dto, Town town) {
         Message message = new Message();
-
-        message.setId(messageDto.getId());
-        message.setTitle(messageDto.getTitle());
-        message.setUser(UserMapper.fromDto(messageDto.getUser()));
-
+        message.setId(dto.getId());
+        message.setTitle(dto.getTitle());
+        message.setText(dto.getText());
+        message.setTown(town);
         return message;
     }
-
-    public static MessageDto toDto(Message message) {
-        MessageDto messageDto = new MessageDto();
-
-        messageDto.setId(message.getId());
-        messageDto.setTitle(message.getTitle());
-        messageDto.setUser(UserMapper.toDto(message.getUser()));
-
-        return messageDto;
-    }
-
 }

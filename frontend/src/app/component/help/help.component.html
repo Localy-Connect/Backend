@@ -1,0 +1,52 @@
+<div class="help-overview">
+  <div class="header">
+    <h1>{{ getContent().title }}</h1>
+    <div class="language-selector">
+      <label for="language">{{ getContent().languageLabel }}</label>
+      <select id="language" [(ngModel)]="selectedLanguage" (change)="changeLanguage(selectedLanguage)">
+        <option *ngFor="let language of languages" [value]="language">{{ language }}</option>
+      </select>
+    </div>
+  </div>
+  <ul>
+    <li (click)="toggleSection('isIntroductionExpanded')">
+      {{ getContent().introduction }}
+      <span [class]="sectionStates['isIntroductionExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
+    </li>
+    <li *ngIf="sectionStates['isIntroductionExpanded']">
+      <p>{{ getContent().introduction }}</p>
+    </li>
+
+    <li (click)="toggleSection('isInstructionsExpanded')">
+      {{ getContent().instructions.title }}
+      <span [class]="sectionStates['isInstructionsExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
+    </li>
+    <li *ngIf="sectionStates['isInstructionsExpanded']">
+      <h3>{{ getContent().instructions.login.title }}</h3>
+      <ol>
+        <li *ngFor="let step of getContent().instructions.login.steps">{{ step }}</li>
+      </ol>
+
+      <h3>{{ getContent().instructions.navigation.title }}</h3>
+      <ul>
+        <li *ngFor="let step of getContent().instructions.navigation.steps">{{ step }}</li>
+      </ul>
+
+      <h3>{{ getContent().instructions.functionalities.title }}</h3>
+      <ul>
+        <li *ngFor="let item of getContent().instructions.functionalities.items">{{ item }}</li>
+      </ul>
+    </li>
+
+    <li (click)="toggleSection('isTroubleshootingExpanded')">
+      {{ getContent().troubleshooting.title }}
+      <span [class]="sectionStates['isTroubleshootingExpanded'] ? 'arrow-down' : 'arrow-right'"></span>
+    </li>
+    <li *ngIf="sectionStates['isTroubleshootingExpanded']">
+      <h3>{{ getContent().troubleshooting.title }}</h3>
+      <ol>
+        <li *ngFor="let step of getContent().troubleshooting.steps">{{ step }}</li>
+      </ol>
+    </li>
+  </ul>
+</div>

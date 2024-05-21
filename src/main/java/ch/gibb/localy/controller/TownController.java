@@ -1,6 +1,8 @@
 package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.TownDto;
+import ch.gibb.localy.data.entity.User;
+import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.TownService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,13 +60,21 @@ public class TownController {
     }
 
     @PostMapping(consumes = "application/json")
-    public void create(@RequestBody TownDto townDto) {
-        try {
-            townService.create(townDto);
-        } catch (DataIntegrityViolationException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT);
-        }
+    public TownDto createTown(@RequestBody TownDto townDto) {
+        User user = AuthInfo.getUser();
+        return townService.createTown(townDto, user);
     }
 
 
+    @GetMapping("/{id}" + "/join")
+    public void joinTown(@PathVariable Integer id) {
+        User userId = AuthInfo.getUser();
+        townService.joinTown(id, userId);
+    }
+
+    @GetMapping("/{id}" + "/leave")
+    public void leaveTown(@PathVariable Integer id) {
+        User userId = AuthInfo.getUser();
+        townService.leaveTown(id, userId);
+    }
 }

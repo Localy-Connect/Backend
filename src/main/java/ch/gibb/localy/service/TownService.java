@@ -2,13 +2,18 @@ package ch.gibb.localy.service;
 
 import ch.gibb.localy.data.dto.TownDto;
 import ch.gibb.localy.data.entity.Town;
+import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.TownMapper;
 import ch.gibb.localy.data.repository.TownRepository;
+import ch.gibb.localy.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -16,20 +21,24 @@ public class TownService {
 
     @Autowired
     private TownRepository townRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public TownDto create(TownDto townDto) {
-        townRepository.save(TownMapper.fromDto(townDto));
-        return townDto;
+    public TownDto createTown(TownDto townDto, User user) {
+        if (townRepository.findByName(townDto.getName()).isPresent()) {
+            throw new IllegalArgumentException("Town with name " + townDto.getName() + " already exists");
+        }
+
+        Town town = TownMapper.fromDto(townDto);
+        townRepository.save(town);
+        return TownMapper.toDto(town);
     }
 
     public List<TownDto> findAll() {
-        List<TownDto> towns = new ArrayList<>();
-        for (Town t : townRepository.findAll()) {
-            towns.add(TownMapper.toDto(t));
-        }
-        return towns;
+        return townRepository.findAll().stream()
+                .map(TownMapper::toDto)
+                .collect(Collectors.toList());
     }
-
 
     public TownDto findById(Integer id) {
         return TownMapper.toDto(townRepository.findById(id).orElseThrow());
@@ -43,5 +52,30 @@ public class TownService {
         townRepository.deleteById(id);
     }
 
+    @Transactional
+    public void joinTown(Integer townId, User user) {
+        if (user.getTown() != null) {
+            throw new IllegalArgumentException("User is already in a Town");
+        }
+        Town town = townRepository.findById(townId)
+                .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
+        town.getUsers().add(user);
+        user.setTown(town);
+        userRepository.save(user);
+        TownMapper.toDto(townRepository.save(town));
+    }
+
+    @Transactional
+    public void leaveTown(Integer townId, User user) {
+        if (user.getTown() == null) {
+            throw new IllegalArgumentException("User is not in a Town");
+        }
+        Town town = townRepository.findById(townId)
+                .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
+        town.getUsers().remove(user);
+        user.setTown(null);
+        userRepository.save(user);
+        TownMapper.toDto(townRepository.save(town));
+    }
 }
 

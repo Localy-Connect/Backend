@@ -1,0 +1,22 @@
+<div class="profile-container" *ngIf="user">
+  <div class="profile-card">
+    <h1>Profile</h1>
+    <div class="profile-details">
+      <h2>Name: {{ user.name }}</h2>
+      <p>Email: {{ user.email }}</p>
+      <p>Phone: {{ user.phoneNr }}</p>
+      <p>
+        Town:
+        <ng-container *ngIf="user.town; else noTown">
+          <a [routerLink]="['/town', user.town.id]">{{ user.town.name }}</a>
+        </ng-container>
+        <ng-template #noTown>
+          You don't have a town. Choose a town <a [routerLink]="['/home']">here</a>.
+        </ng-template>
+      </p>
+    </div>
+  </div>
+</div>
+<div *ngIf="!user" class="loading">
+  Loading...
+</div>

@@ -2,12 +2,12 @@ package ch.gibb.localy.data.entity;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -15,16 +15,13 @@ public class Message {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "town_id")  // Ensure that the column name matches the one in your database
+    @JoinColumn(name = "town_id")
     private Town town;
-
-    public Message() {
-    }
 
     public Long getId() {
         return id;
@@ -58,18 +55,11 @@ public class Message {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Message message = (Message) o;
-
-        return id.equals(message.id);
+    public Town getTown() {
+        return town;
     }
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setTown(Town town) {
+        this.town = town;
     }
 }

@@ -1,5 +1,7 @@
 package ch.gibb.localy.data.dto;
 
+import ch.gibb.localy.data.entity.User;
+
 public class UserDto {
 
     public Long id;
@@ -13,6 +15,16 @@ public class UserDto {
     private TownDto town;
 
     private String email;
+
+    public UserDto(User user) {
+        this.name = user.getName();
+        this.phoneNr = user.getPhoneNr();
+        this.id = user.getId();
+        this.email = user.getEmail();
+    }
+
+    public UserDto() {
+    }
 
     public Long getId() {
         return id;
