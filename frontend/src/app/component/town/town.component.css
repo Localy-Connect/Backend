@@ -1,7 +1,7 @@
 .town-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 80vh;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
@@ -19,6 +19,7 @@ h2 {
 
 .chat-window {
   flex: 1;
+  max-height: 50vh;
   padding: 16px;
   overflow-y: auto;
   border-top: 1px solid #ccc;

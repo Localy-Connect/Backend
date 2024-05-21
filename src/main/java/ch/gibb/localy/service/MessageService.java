@@ -30,6 +30,7 @@ public class MessageService {
 
     public MessageDto createMessage(MessageDto messageDto, User user, Town town) {
         Message message = MessageMapper.fromDto(messageDto, town);
+
         messageRepository.save(message);
         return MessageMapper.toDto(message);
     }

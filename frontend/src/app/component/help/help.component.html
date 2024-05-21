@@ -2,7 +2,7 @@
   <div class="header">
     <h1>{{ getContent().title }}</h1>
     <div class="language-selector">
-      <label for="language">Language:</label>
+      <label for="language">{{ getContent().languageLabel }}</label>
       <select id="language" [(ngModel)]="selectedLanguage" (change)="changeLanguage(selectedLanguage)">
         <option *ngFor="let language of languages" [value]="language">{{ language }}</option>
       </select>

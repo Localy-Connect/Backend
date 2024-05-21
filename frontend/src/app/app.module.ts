@@ -21,7 +21,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {CreateTownDialogComponent} from "./component/create-town-dialog/create-town-dialog.component";
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
-import {MatDialogActions, MatDialogClose} from "@angular/material/dialog";
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatCard, MatCardContent, MatCardModule, MatCardTitle} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
@@ -60,7 +60,9 @@ import {MatLine} from "@angular/material/core";
     MatButtonModule,
     MatCardModule,
     MatListModule,
-    MatLine
+    MatLine,
+    MatDialogContent,
+    MatDialogTitle
   ],
   providers: [
     AuthService,

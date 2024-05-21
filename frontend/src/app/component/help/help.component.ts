@@ -35,6 +35,7 @@ export class HelpComponent {
     if (this.selectedLanguage === 'Deutsch') {
       return {
         title: 'Benutzerhandbuch',
+        languageLabel: 'Sprache:',
         introduction: 'Willkommen zum Benutzerhandbuch für unser System. Dieses Handbuch soll Ihnen helfen, das System effektiv zu nutzen und eventuelle Probleme zu beheben.',
         instructions: {
           title: 'Bedienungsanleitung',
@@ -84,6 +85,7 @@ export class HelpComponent {
     } else {
       return {
         title: 'User Manual',
+        languageLabel: 'Language:',
         introduction: 'Welcome to the user manual for our system. This manual is designed to help you effectively use the system and resolve any issues.',
         instructions: {
           title: 'Instructions',

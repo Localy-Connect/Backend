@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    @EntityGraph(attributePaths = {"town"})
     User findByName(String name);
 }
