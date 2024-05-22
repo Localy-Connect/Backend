@@ -14,6 +14,8 @@
           You don't have a town. Choose a town <a [routerLink]="['/home']">here</a>.
         </ng-template>
       </p>
+      <button mat-raised-button color="primary" class="profile-button" (click)="openChangePasswordDialog()">Change Password</button>
+      <button mat-raised-button color="primary" class="profile-button" (click)="openChangeUserDataDialog()">Edit Profile</button>
     </div>
   </div>
 </div>

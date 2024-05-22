@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth/auth.service';
-import { User } from '../../services/auth/auth.models';
 import { UsersService } from '../../services/user/users.service';
+import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
+import { ChangeUserDataDialogComponent } from '../change-user-data-dialog/change-user-data-dialog.component';
+import { User } from "../../model/model";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +18,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private userService: UsersService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +52,34 @@ export class ProfileComponent implements OnInit {
     } else {
       console.error('User ID not found');
       this.router.navigate(['/signin']);
+    }
+  }
+
+  openChangePasswordDialog(): void {
+    const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Password was changed successfully');
+      }
+    });
+  }
+
+  openChangeUserDataDialog(): void {
+    if (this.user) {
+      const dialogRef = this.dialog.open(ChangeUserDataDialogComponent, {
+        width: '400px',
+        data: this.user
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.fetchUserData();
+          console.log('User data was updated successfully');
+        }
+      });
     }
   }
 }

@@ -1,0 +1,16 @@
+.full-width {
+  width: 100%;
+}
+
+.mat-dialog-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mat-dialog-content {
+  min-width: 400px;
+}
+
+.mat-dialog-actions {
+  margin-top: 20px;
+}

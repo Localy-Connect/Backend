@@ -3,7 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-import {SigninResponse, SignupResponse, User} from './auth.models';
+import {SigninResponse, SignupResponse} from './auth.models';
+import {User} from "../../model/model";
 
 @Injectable({
   providedIn: 'root'

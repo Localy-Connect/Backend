@@ -27,6 +27,8 @@ import {MatCard, MatCardContent, MatCardModule, MatCardTitle} from "@angular/mat
 import {MatInputModule} from "@angular/material/input";
 import {MatListModule} from "@angular/material/list";
 import {MatLine} from "@angular/material/core";
+import {ChangePasswordDialogComponent} from "./component/change-password-dialog/change-password-dialog.component";
+import {ChangeUserDataDialogComponent} from "./component/change-user-data-dialog/change-user-data-dialog.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {MatLine} from "@angular/material/core";
     SignupComponent,
     TownComponent,
     ProfileComponent,
-    CreateTownDialogComponent
+    CreateTownDialogComponent,
+    ChangePasswordDialogComponent,
+    ChangeUserDataDialogComponent
   ],
   imports: [
     BrowserModule,

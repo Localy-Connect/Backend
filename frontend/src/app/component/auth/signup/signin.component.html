@@ -14,7 +14,7 @@
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" type="password" placeholder="Enter your password">
         <mat-error *ngIf="signinForm.controls['password'].invalid && signinForm.controls['password'].touched">
-          Password is required
+          Password is required and must be at least 8 characters
         </mat-error>
       </mat-form-field>
 

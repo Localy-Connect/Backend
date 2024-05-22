@@ -1,8 +1,11 @@
 package ch.gibb.localy.controller;
 
+import ch.gibb.localy.controller.request.ChangePasswordRequest;
 import ch.gibb.localy.controller.response.UserResponse;
 import ch.gibb.localy.data.dto.UserDto;
+import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -58,5 +61,10 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Data integrity violation");
         }
+    }
+
+    @PatchMapping(consumes = "application/json", path = "/password")
+    public void changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        userService.changePassword(AuthInfo.getUser().getId(), changePasswordRequest.getCurrentPassword(), changePasswordRequest.getNewPassword());
     }
 }

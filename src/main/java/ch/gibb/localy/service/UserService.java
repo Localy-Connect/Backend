@@ -6,12 +6,15 @@ import ch.gibb.localy.data.entity.Token;
 import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.UserMapper;
 import ch.gibb.localy.data.repository.UserRepository;
+import ch.gibb.localy.security.AuthInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -59,11 +62,31 @@ public class UserService {
     }
 
     public void update(UserDto userDto) {
-        userRepository.save(UserMapper.fromDto(userDto));
+        if (!Objects.equals(AuthInfo.getUser().getId(), userDto.getId())) {
+            throw new IllegalArgumentException("User can only change his profile");
+        }
+        User updatedUser = new User();
+        updatedUser.setId(userDto.getId());
+        updatedUser.setName(userDto.getName());
+        updatedUser.setEmail(userDto.getEmail());
+        updatedUser.setPhoneNr(userDto.getPhoneNr());
+        userRepository.save(updatedUser);
     }
 
     public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
+    public void changePassword(Long id, String currentPassword, String newPassword) {
+        if (Objects.equals(currentPassword, newPassword)) {
+            throw new IllegalArgumentException("New password matching old password");
+        }
+        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User" + " not found with " + "id" + " = " + id));
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new IllegalArgumentException("Wrong Password");
+        }
+        newPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
 }

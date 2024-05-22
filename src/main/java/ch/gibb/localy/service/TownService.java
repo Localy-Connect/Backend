@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class TownService {
 
     public TownDto createTown(TownDto townDto, User user) {
         if (townRepository.findByName(townDto.getName()).isPresent()) {
-            throw new IllegalArgumentException("Town with name " + townDto.getName() + " already exists");
+            throw new NoSuchElementException("Town with name " + townDto.getName() + " already exists");
         }
 
         Town town = TownMapper.fromDto(townDto);
@@ -58,7 +59,7 @@ public class TownService {
             throw new IllegalArgumentException("User is already in a Town");
         }
         Town town = townRepository.findById(townId)
-                .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
+                .orElseThrow(() -> new NoSuchElementException("Town with id " + townId + " not found"));
         town.getUsers().add(user);
         user.setTown(town);
         userRepository.save(user);
@@ -71,11 +72,10 @@ public class TownService {
             throw new IllegalArgumentException("User is not in a Town");
         }
         Town town = townRepository.findById(townId)
-                .orElseThrow(() -> new IllegalArgumentException("Town with id " + townId + " not found"));
+                .orElseThrow(() -> new NoSuchElementException("Town with id " + townId + " not found"));
         town.getUsers().remove(user);
         user.setTown(null);
         userRepository.save(user);
         TownMapper.toDto(townRepository.save(town));
     }
 }
-

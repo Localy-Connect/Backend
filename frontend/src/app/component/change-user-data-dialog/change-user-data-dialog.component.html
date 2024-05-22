@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Update User Data</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="userData.name" placeholder="Enter name" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="userData.email" placeholder="Enter email" required>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Phone Number</mat-label>
+    <input matInput [(ngModel)]="userData.phoneNr" placeholder="Enter phone number" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSaveClick()">Save</button>
+</div>
