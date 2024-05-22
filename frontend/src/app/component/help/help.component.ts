@@ -69,7 +69,9 @@ export class HelpComponent {
               'Write a Message: Eine Nachricht in einer Stadt schreiben.',
               'View Town Messages: Nachrichten in der Stadt ansehen.',
               'View Profile: Ihre persönlichen Daten ansehen.',
-              'View All Towns: Alle verfügbaren Städte ansehen.'
+              'View All Towns: Alle verfügbaren Städte ansehen.',
+              'Change Password: Ihr Passwort ändern.',
+              'Edit Profile: Ihr Profil bearbeiten.'
             ]
           }
         },
@@ -119,7 +121,9 @@ export class HelpComponent {
               'Write a Message: Write a message in a town.',
               'View Town Messages: View messages in the town.',
               'View Profile: View your personal data.',
-              'View All Towns: View all available towns.'
+              'View All Towns: View all available towns.',
+              'Change Password: Change your password.',
+              'Edit Profile: Edit your profile.'
             ]
           }
         },
