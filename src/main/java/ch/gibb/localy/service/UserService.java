@@ -41,6 +41,7 @@ public class UserService {
         return tokenService.generateToken(user);
     }
 
+    // zum einlogen eines Users darin wird das Passwort gehasht und der User initial gespeichert
     public void signUp(UserDto userDto) {
         if (userRepository.findByName(userDto.getName()) != null) {
             throw new IllegalArgumentException("User with this username already exists");
