@@ -1,9 +1,17 @@
 <div class="home-container">
   <div *ngIf="!userTownId">
     <h2>Available Towns</h2>
-    <button mat-raised-button color="primary" (click)="openCreateTownDialog()">Create Town</button>
+    <div class="control-container">
+      <button mat-raised-button color="primary" (click)="openCreateTownDialog()" class="full-width">Create Town</button>
+    </div>
+    <div class="control-container">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Search Towns</mat-label>
+        <input matInput [(ngModel)]="searchTerm" placeholder="Enter town name">
+      </mat-form-field>
+    </div>
     <mat-list>
-      <mat-list-item *ngFor="let town of towns" class="town-list-item">
+      <mat-list-item *ngFor="let town of filteredTowns()" class="town-list-item">
         <span mat-line>{{ town.name }}</span>
         <button mat-button color="primary" (click)="joinTown(town.id)">Join</button>
       </mat-list-item>

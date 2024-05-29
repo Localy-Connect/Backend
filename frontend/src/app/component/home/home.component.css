@@ -9,8 +9,16 @@ h2 {
   margin-bottom: 1rem;
 }
 
-button {
-  align-content: end;
+.control-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 0.5rem;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .mat-list-item {

@@ -13,6 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class HomeComponent implements OnInit {
   towns: any[] = [];
+  searchTerm: string = '';
   userTownId: string | null = null;
 
   constructor(
@@ -78,5 +79,14 @@ export class HomeComponent implements OnInit {
         console.error('Error closing dialog', err);
       }
     });
+  }
+
+  filteredTowns(): any[] {
+    if (!this.searchTerm) {
+      return this.towns;
+    }
+    return this.towns.filter(town => 
+      town.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 }
