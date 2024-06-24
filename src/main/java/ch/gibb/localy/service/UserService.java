@@ -66,12 +66,11 @@ public class UserService {
         if (!Objects.equals(AuthInfo.getUser().getId(), userDto.getId())) {
             throw new IllegalArgumentException("User can only change his profile");
         }
-        User updatedUser = new User();
-        updatedUser.setId(userDto.getId());
-        updatedUser.setName(userDto.getName());
-        updatedUser.setEmail(userDto.getEmail());
-        updatedUser.setPhoneNr(userDto.getPhoneNr());
-        userRepository.save(updatedUser);
+        User user = userRepository.findById(userDto.getId()).get();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setPhoneNr(userDto.getPhoneNr());
+        userRepository.save(user);
     }
 
     public void deleteById(Long id) {
