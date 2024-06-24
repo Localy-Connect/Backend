@@ -8,6 +8,7 @@ import ch.gibb.localy.data.entity.mapper.MessageMapper;
 import ch.gibb.localy.data.repository.MessageRepository;
 import ch.gibb.localy.data.repository.TownRepository;
 import ch.gibb.localy.data.repository.UserRepository;
+import ch.gibb.localy.security.AuthInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class MessageService {
 
     public MessageDto createMessage(MessageDto messageDto, User user, Town town) {
         Message message = MessageMapper.fromDto(messageDto, town);
+        message.setUser(user);
 
         messageRepository.save(message);
         return MessageMapper.toDto(message);

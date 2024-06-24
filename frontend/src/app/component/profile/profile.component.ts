@@ -76,7 +76,6 @@ export class ProfileComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.fetchUserData();
           console.log('User data was updated successfully');
         }
       });

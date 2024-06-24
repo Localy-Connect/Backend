@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from "../../../services/auth/auth.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from "@angular/forms";
 import { tap } from 'rxjs/operators';
 
 @Component({
@@ -17,9 +17,21 @@ export class SignupComponent {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNr: ['', Validators.required],
+      phoneNr: ['', [Validators.required, this.numericValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
+  }
+
+  // Custom validator to check if the phone number is numeric
+  numericValidator(control: AbstractControl): ValidationErrors | null {
+    const value = control.value;
+    if (!value) {
+      return { required: true };
+    }
+    if (isNaN(value)) {
+      return { notNumeric: true };
+    }
+    return null;
   }
 
   onSubmit(): void {
