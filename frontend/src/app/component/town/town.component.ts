@@ -14,6 +14,7 @@ export class TownComponent implements OnInit {
   messages: any;
   messageTitle: string = '';
   messageText: string = '';
+  currentUserId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +25,10 @@ export class TownComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTown();
+    const user = this.authService.getUser();
+    if (user) {
+      this.currentUserId = user.id;
+    }
   }
 
   loadTown(): void {
@@ -37,7 +42,6 @@ export class TownComponent implements OnInit {
       })
     }
   }
-
 
   leaveTown(townId: number): void {
     this.townService.leaveTown(townId).subscribe(() => {

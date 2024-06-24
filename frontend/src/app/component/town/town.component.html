@@ -3,7 +3,7 @@
     <button mat-button class="leave-town-button" (click)="leaveTown(town.id)">Leave Town</button>
   </h2>
   <div class="chat-window">
-    <div class="message" *ngFor="let message of messages">
+    <div class="message" *ngFor="let message of messages" [ngClass]="{'my-message': message.userId === currentUserId}">
       <strong>{{ message.title }}</strong>
       <p>{{ message.text }}</p>
     </div>

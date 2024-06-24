@@ -18,4 +18,5 @@ export interface Message {
   title: string;
   text: string;
   townId: number;
+  userId: number;
 }

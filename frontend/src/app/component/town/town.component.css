@@ -41,6 +41,11 @@ h2 {
   background-color: #e6e6e6;
 }
 
+.message.my-message {
+  background-color: #e0f7fa;
+  border-color: #00796b;
+}
+
 .message strong {
   display: block;
   margin-bottom: 4px;

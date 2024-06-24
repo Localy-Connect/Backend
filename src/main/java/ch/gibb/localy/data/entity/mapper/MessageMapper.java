@@ -3,6 +3,8 @@ package ch.gibb.localy.data.entity.mapper;
 import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.data.entity.Town;
+import ch.gibb.localy.data.entity.User;
+import ch.gibb.localy.security.AuthInfo;
 
 public class MessageMapper {
     public static MessageDto toDto(Message message) {
@@ -11,6 +13,7 @@ public class MessageMapper {
         dto.setTitle(message.getTitle());
         dto.setText(message.getText());
         dto.setTownId(message.getTown() != null ? message.getTown().getId() : null);
+        dto.setUserId(message.getUser() != null ? message.getUser().getId() : null);
         return dto;
     }
 
@@ -20,6 +23,8 @@ public class MessageMapper {
         message.setTitle(dto.getTitle());
         message.setText(dto.getText());
         message.setTown(town);
+
         return message;
     }
+
 }
