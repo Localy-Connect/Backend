@@ -20,6 +20,7 @@ export class TownComponent implements OnInit {
     private route: ActivatedRoute,
     private townService: TownService,
     private authService: AuthService,
+    private router: Router,
     private messageService: MessageService) {
   }
 
@@ -45,7 +46,7 @@ export class TownComponent implements OnInit {
 
   leaveTown(townId: number): void {
     this.townService.leaveTown(townId).subscribe(() => {
-      this.authService.logout();
+      this.router.navigate(['/home']);
     });
   }
 

@@ -17,12 +17,13 @@
           Please enter a valid email address
         </mat-error>
       </mat-form-field>
-
+      
       <mat-form-field appearance="fill">
         <mat-label>Phone Number</mat-label>
         <input matInput formControlName="phoneNr" type="tel" placeholder="Enter your phone number">
         <mat-error *ngIf="signupForm.controls['phoneNr'].invalid && signupForm.controls['phoneNr'].touched">
-          Phone Number is required
+          <ng-container *ngIf="signupForm.controls['phoneNr'].errors?.['required']">Phone Number is required</ng-container>
+          <ng-container *ngIf="signupForm.controls['phoneNr'].errors?.['notNumeric']">Phone Number needs to be a number</ng-container>
         </mat-error>
       </mat-form-field>
 
