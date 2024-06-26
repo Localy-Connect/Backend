@@ -20,6 +20,8 @@ public class UserResponse {
         this.email = user.getEmail();
         if (user.getTown() != null) {
             this.town = TownMapper.fromDto(user.getTown());
+            this.town.setMessages(null);
+            this.town.setUsers(null);
         }
     }
 
@@ -30,9 +32,8 @@ public class UserResponse {
         this.email = user.getEmail();
         if (user.getTown() != null) {
             this.town = user.getTown();
-            if (this.town.getUsers() != null) {
-                this.town.getUsers().forEach(townUser -> townUser.setPassword(null));
-            }
+            this.town.setMessages(null);
+            this.town.setUsers(null);
         }
     }
 }

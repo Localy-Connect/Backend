@@ -14,16 +14,22 @@ export class TownComponent implements OnInit {
   messages: any;
   messageTitle: string = '';
   messageText: string = '';
+  currentUserId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private townService: TownService,
     private authService: AuthService,
+    private router: Router,
     private messageService: MessageService) {
   }
 
   ngOnInit(): void {
     this.loadTown();
+    const user = this.authService.getUser();
+    if (user) {
+      this.currentUserId = user.id;
+    }
   }
 
   loadTown(): void {
@@ -38,10 +44,9 @@ export class TownComponent implements OnInit {
     }
   }
 
-
   leaveTown(townId: number): void {
     this.townService.leaveTown(townId).subscribe(() => {
-      this.authService.logout();
+      this.router.navigate(['/home']);
     });
   }
 
