@@ -2,6 +2,7 @@ package ch.gibb.localy.data.entity;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import java.util.HashSet;
 
 @Entity(name = "town")
 public class Town {
@@ -14,10 +15,10 @@ public class Town {
     private String name;
 
     @OneToMany(mappedBy = "town", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Message> messages;
+    private Set<Message> messages = new HashSet<>();
 
     @OneToMany(mappedBy = "town")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     // Getters and setters...
 

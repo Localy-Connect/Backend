@@ -3,6 +3,7 @@ package ch.gibb.localy;
 import ch.gibb.localy.data.dto.TownDto;
 import ch.gibb.localy.data.entity.Town;
 import ch.gibb.localy.data.entity.User;
+import ch.gibb.localy.data.repository.MessageRepository;
 import ch.gibb.localy.data.repository.TownRepository;
 import ch.gibb.localy.data.repository.UserRepository;
 import ch.gibb.localy.service.TownService;
@@ -27,6 +28,9 @@ public class TownServiceTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private MessageRepository messageRepository; // Add this mock
 
     @InjectMocks
     private TownService townService;
@@ -99,10 +103,14 @@ public class TownServiceTest {
 
     @Test
     public void testDeleteById() {
-        doNothing().when(townRepository).deleteById(anyInt());
+        Town town = new Town();
+        when(townRepository.findById(anyInt())).thenReturn(Optional.of(town));
 
         townService.deleteById(1);
 
-        verify(townRepository, times(1)).deleteById(1);
+        verify(townRepository, times(1)).findById(1);
+        verify(messageRepository, times(1)).deleteAll(town.getMessages());
+        verify(townRepository, times(1)).delete(town);
     }
+
 }

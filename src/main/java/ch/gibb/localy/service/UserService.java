@@ -59,14 +59,16 @@ public class UserService {
     }
 
     public UserDto findById(Long id) {
-        return UserMapper.toDto(userRepository.findById(id).orElseThrow());
+        return UserMapper.toDto(userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id = " + id)));
     }
 
     public void update(UserDto userDto) {
         if (!Objects.equals(AuthInfo.getUser().getId(), userDto.getId())) {
             throw new IllegalArgumentException("User can only change his profile");
         }
-        User user = userRepository.findById(userDto.getId()).get();
+        User user = userRepository.findById(userDto.getId())
+                .orElseThrow(() -> new NoSuchElementException("User not found with id = " + userDto.getId()));
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setPhoneNr(userDto.getPhoneNr());
@@ -81,7 +83,8 @@ public class UserService {
         if (Objects.equals(currentPassword, newPassword)) {
             throw new IllegalArgumentException("New password matching old password");
         }
-        User user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User" + " not found with " + "id" + " = " + id));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("User not found with id = " + id));
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
             throw new IllegalArgumentException("Wrong Password");
         }
