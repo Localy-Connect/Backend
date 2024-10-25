@@ -1,5 +1,5 @@
-# Using Maven with OpenJDK 8 for the CI/CD pipeline
-image: maven:3-openjdk-8
+# Using Maven with OpenJDK 17 for the CI/CD pipeline
+image: maven:3-openjdk-17
 
 # Cache Maven dependencies between builds
 cache:
@@ -39,6 +39,7 @@ deploy:
   script:
     - if [ ! -f ci_settings.xml ]; then
       echo "CI settings missing! Please create ci_settings.xml following GitLab’s Maven Repository guide.";
+      exit 1;  # Ensure the script exits if the file is missing
       fi
     - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml'
   only:
