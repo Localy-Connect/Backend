@@ -15,6 +15,10 @@ variables:
 
 image: maven:3-openjdk-17
 
+maven_install:
+  script:
+    - mvn clean install -X --settings ci_settings.xml
+
 cache:
   paths:
     - .m2/repository
