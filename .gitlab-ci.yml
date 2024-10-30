@@ -12,6 +12,7 @@ variables:
     --no-transfer-progress
     -DinstallAtEnd=true
     -DdeployAtEnd=true
+    -X  # Füge den Debug-Parameter hinzu
 
 image: maven:3-openjdk-17
 
