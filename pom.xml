@@ -123,5 +123,10 @@
             <id>gitlab-maven</id>
             <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
         </repository>
+        <snapshotRepository>
+            <id>gitlab-maven-snapshots</id>
+            <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
+        </snapshotRepository>
     </distributionManagement>
+
 </project>
