@@ -20,6 +20,17 @@
         <java.version>17</java.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
+        </repository>
+        <snapshotRepository>
+            <id>gitlab-maven-snapshots</id>
+            <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,6 +95,11 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>1.14.12</version> <!-- oder eine neuere Version -->
         </dependency>
     </dependencies>
 
