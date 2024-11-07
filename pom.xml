@@ -100,8 +100,9 @@
                     <user>localyuser</user>
                     <password>localysecret</password>
                     <schemas>
-                        <schema>localy</schema>
+                        <schema>localydb</schema>
                     </schemas>
+                    <cleanDisabled>false</cleanDisabled>
                 </configuration>
             </plugin>
 
