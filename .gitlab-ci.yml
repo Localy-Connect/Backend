@@ -39,7 +39,7 @@ verify:
 deploy:
   stage: deploy
   script:
-    - 'mvn $MAVEN_CLI_OPTS deploy -DskipTests -DaltDeploymentRepository=gitlab-maven::default::https://git.gibb.ch/api/v4/projects/localy/packages/maven'
+    - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DskipTests'
   only:
     - main
     - /^feature\/.*$/
