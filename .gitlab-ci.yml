@@ -38,9 +38,6 @@ deploy-maven:
         exit 1
       fi
     - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DskipTests'
-  only:
-    - main
-    - /^feature\/.*$/
 
 pages:
   image: node:8.12.0
@@ -58,6 +55,3 @@ pages:
   artifacts:
     paths:
       - frontend/public
-  only:
-    - master
-    - pages
