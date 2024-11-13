@@ -46,12 +46,12 @@ pages:
       - frontend/node_modules/
   stage: deploy
   script:
+    - mkdir -p public
     - cd frontend
     - npm install -g @angular/cli@6.2.1
     - npm install
     - ng build
-    - mkdir -p public
-    - mv dist/frontend/* public/
+    - mv dist/frontend/* ../public/
   artifacts:
     paths:
-      - frontend/public
+      - public
