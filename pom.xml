@@ -26,7 +26,7 @@
             <url>https://git.gibb.ch/nzy134323/localy/packages/maven</url>
         </repository>
         <snapshotRepository>
-            <id>gitlab-maven-snapshots</id>
+            <id>gitlab-maven</id>
             <url>https://git.gibb.ch/nzy134323/localy/packages/maven</url>
         </snapshotRepository>
     </distributionManagement>
