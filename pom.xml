@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -14,7 +13,6 @@
     <artifactId>Localy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Localy</name>
-    <description>Localy</description>
 
     <properties>
         <java.version>17</java.version>
@@ -51,7 +49,6 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.8</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -99,7 +96,7 @@
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.14.12</version> <!-- oder eine neuere Version -->
+            <version>1.14.12</version>
         </dependency>
     </dependencies>
 
@@ -133,5 +130,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
