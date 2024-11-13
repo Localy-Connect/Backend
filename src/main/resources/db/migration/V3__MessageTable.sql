@@ -1,4 +1,4 @@
-CREATE TABLE message
+CREATE TABLE IF NOT EXISTS message
 (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
