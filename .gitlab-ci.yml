@@ -4,6 +4,7 @@ variables:
     -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
     -Dorg.slf4j.simpleLogger.showDateTime=true
     -Djava.awt.headless=true
+    -DaltDeploymentRepository=gitlab-maven::default::https://git.gibb.ch/api/v4/projects/localy/packages/maven
   MAVEN_CLI_OPTS: >-
     --batch-mode
     --errors
@@ -38,12 +39,7 @@ verify:
 deploy:
   stage: deploy
   script:
-    - |
-      if [ ! -f ci_settings.xml ]; then
-        echo "CI settings file missing! Please see https://docs.gitlab.com/ee/user/packages/maven_repository/index.html#create-maven-packages-with-gitlab-cicd for instructions."
-        exit 1
-      fi
-    - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DaltDeploymentRepository=gitlab-maven::default::https://git.gibb.ch/api/v4/projects/134323/packages/maven -X'
+    - 'mvn $MAVEN_CLI_OPTS deploy -DskipTests -DaltDeploymentRepository=gitlab-maven::default::https://git.gibb.ch/api/v4/projects/localy/packages/maven'
   only:
     - main
     - /^feature\/.*$/
