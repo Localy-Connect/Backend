@@ -14,7 +14,7 @@
             <repositories>
                 <repository>
                     <id>gitlab-maven</id>
-                    <url>https://git.gibb.ch/nzy134323/localy/packages/maven</url>
+                    <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
                 </repository>
             </repositories>
         </profile>
