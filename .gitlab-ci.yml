@@ -22,7 +22,6 @@ cache:
 
 stages:
   - build
-  - verify
   - deploy
 
 build:
@@ -30,12 +29,7 @@ build:
   script:
     - 'mvn $MAVEN_CLI_OPTS clean install'
 
-verify:
-  stage: verify
-  script:
-    - 'mvn $MAVEN_CLI_OPTS verify'
-
-deploy:
+deploy-maven:
   stage: deploy
   script:
     - |
