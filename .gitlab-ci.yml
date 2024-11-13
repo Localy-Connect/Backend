@@ -4,7 +4,6 @@ variables:
     -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
     -Dorg.slf4j.simpleLogger.showDateTime=true
     -Djava.awt.headless=true
-    -DaltDeploymentRepository=gitlab-maven::default::https://git.gibb.ch/api/v4/projects/localy/packages/maven
   MAVEN_CLI_OPTS: >-
     --batch-mode
     --errors
