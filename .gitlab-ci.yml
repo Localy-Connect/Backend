@@ -47,3 +47,23 @@ deploy:
   only:
     - main
     - /^feature\/.*$/
+
+pages:
+  image: node:8.12.0
+  cache:
+    paths:
+      - frontend/node_modules/
+  stage: deploy
+  script:
+    - cd frontend
+    - npm install -g @angular/cli@6.2.1
+    - npm install
+    - ng build
+    - mkdir -p public
+    - mv dist/frontend/* public/
+  artifacts:
+    paths:
+      - frontend/public
+  only:
+    - master
+    - pages
