@@ -40,7 +40,7 @@ deploy-maven:
     - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DskipTests'
 
 pages:
-  image: node:8.12.0
+  image: node:lts-bullseye
   cache:
     paths:
       - frontend/node_modules/
