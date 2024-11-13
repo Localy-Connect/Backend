@@ -23,11 +23,11 @@
     <distributionManagement>
         <repository>
             <id>gitlab-maven</id>
-            <url>https://git.gibb.ch/api/v4/projects/localy/packages/maven</url>
+            <url>https://git.gibb.ch/nzy134323/localy/packages/maven</url>
         </repository>
         <snapshotRepository>
             <id>gitlab-maven-snapshots</id>
-            <url>https://git.gibb.ch/api/v4/projects/localy/packages/maven</url>
+            <url>https://git.gibb.ch/nzy134323/localy/packages/maven</url>
         </snapshotRepository>
     </distributionManagement>
 
