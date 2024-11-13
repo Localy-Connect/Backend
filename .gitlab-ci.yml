@@ -39,7 +39,7 @@ verify:
 deploy:
   stage: deploy
   script:
-    - 'mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DskipTests'
+    - 'mvn $MAVEN_CLI_OPTS deploy'
   only:
     - main
     - /^feature\/.*$/
