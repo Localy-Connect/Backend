@@ -4,8 +4,8 @@
     <servers>
         <server>
             <id>gitlab-maven</id>
-            <username>${CI_JOB_TOKEN}</username>
-            <password>${CI_JOB_TOKEN}</password>
+            <username>localyuser</username>
+            <password>localysecret</password>
         </server>
     </servers>
     <profiles>
