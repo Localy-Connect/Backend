@@ -1,25 +1,11 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
     <servers>
         <server>
-            <id>gitlab-maven</id>
-            <username>localyuser</username>
-            <password>localysecret</password>
+            <id>gitlab-maven</id> <!-- Matches the id in pom.xml -->
+            <username>${CI_USERNAME}</username> <!-- GitLab CI/CD variable -->
+            <password>${CI_JOB_TOKEN}</password> <!-- GitLab CI/CD variable -->
         </server>
     </servers>
-    <profiles>
-        <profile>
-            <id>gitlab</id>
-            <repositories>
-                <repository>
-                    <id>gitlab-maven</id>
-                    <url>https://git.gibb.ch/api/v4/projects/134323/packages/maven</url>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-    <activeProfiles>
-        <activeProfile>gitlab</activeProfile>
-    </activeProfiles>
 </settings>

@@ -13,6 +13,7 @@
     <artifactId>Localy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Localy</name>
+    <description>Localy Application</description>
 
     <properties>
         <java.version>17</java.version>
