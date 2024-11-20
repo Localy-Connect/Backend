@@ -3,7 +3,7 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
     <servers>
         <server>
-            <id>gitlab-maven</id> <!-- Matches the id in pom.xml -->
+            <id>ch.gibb</id> <!-- Matches the id in pom.xml -->
             <username>${CI_USERNAME}</username> <!-- GitLab CI/CD variable -->
             <password>${CI_JOB_TOKEN}</password> <!-- GitLab CI/CD variable -->
         </server>
