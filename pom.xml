@@ -85,23 +85,9 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>1.14.12</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -114,8 +100,9 @@
                     <user>localyuser</user>
                     <password>localysecret</password>
                     <schemas>
-                        <schema>localy</schema>
+                        <schema>localydb</schema>
                     </schemas>
+                    <cleanDisabled>false</cleanDisabled>
                 </configuration>
             </plugin>
             <plugin>
