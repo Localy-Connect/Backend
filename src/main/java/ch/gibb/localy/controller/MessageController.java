@@ -2,7 +2,6 @@ package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.dto.TownDto;
-import ch.gibb.localy.data.entity.Town;
 import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.TownMapper;
 import ch.gibb.localy.security.AuthInfo;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

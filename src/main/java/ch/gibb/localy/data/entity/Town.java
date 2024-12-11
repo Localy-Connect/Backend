@@ -1,8 +1,9 @@
 package ch.gibb.localy.data.entity;
 
 import jakarta.persistence.*;
-import java.util.Set;
+
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "town")
 public class Town {

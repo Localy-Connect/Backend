@@ -4,7 +4,6 @@ import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.data.entity.Town;
 import ch.gibb.localy.data.entity.User;
-import ch.gibb.localy.data.entity.mapper.MessageMapper;
 import ch.gibb.localy.data.repository.MessageRepository;
 import ch.gibb.localy.data.repository.TownRepository;
 import ch.gibb.localy.data.repository.UserRepository;

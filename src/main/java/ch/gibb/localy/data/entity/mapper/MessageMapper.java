@@ -3,8 +3,6 @@ package ch.gibb.localy.data.entity.mapper;
 import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.data.entity.Town;
-import ch.gibb.localy.data.entity.User;
-import ch.gibb.localy.security.AuthInfo;
 
 public class MessageMapper {
     public static MessageDto toDto(Message message) {
