@@ -29,7 +29,7 @@ stages:
 build:
   stage: build
   script:
-    - mvn $MAVEN_CLI_OPTS clean install
+    - mvn clean install
   artifacts:
     paths:
       - target/*.jar
@@ -38,7 +38,7 @@ build:
 test:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS test
+    - mvn test
   artifacts:
     paths:
       - target/surefire-reports/
@@ -47,7 +47,7 @@ test:
 package:
   stage: package
   script:
-    - mvn $MAVEN_CLI_OPTS package
+    - mvn package
   artifacts:
     paths:
       - target/*.jar
@@ -57,7 +57,7 @@ deploy:
   stage: deploy
   script:
     - echo "Deploying to GitLab Maven repository..."
-    - mvn $MAVEN_CLI_OPTS deploy --settings ci_settings.xml -DskipTests
+    - mvn deploy --settings ci_settings.xml -DskipTests
   only:
     - main
     - /^release\/.*$/
