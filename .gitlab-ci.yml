@@ -13,6 +13,9 @@ variables:
     -DinstallAtEnd=true
     -DdeployAtEnd=true
     -X  # Füge den Debug-Parameter hinzu
+  CI_REGISTRY: git-registry.gibb.ch/nzy134323/localy
+  CI_REGISTRY_USER: ibi135182
+  CI_REGISTRY_PASSWORD: glpat-yn6Bpo4J6yhTATxabCtb
 
 image: maven:3-openjdk-17
 
@@ -25,6 +28,8 @@ stages:
   - test
   - package
   - deploy
+  - docker-build
+  - docker-push
 
 build:
   stage: build
@@ -63,3 +68,21 @@ deploy:
     - /^release\/.*$/
   dependencies:
     - package
+
+docker-build:
+  image: docker:20.10.16
+  stage: docker-build
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG -f docker/frontend.Dockerfile .
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE:latest
+  artifacts:
+    paths:
+      - docker/frontend.Dockerfile
+
+docker-push:
+  image: docker:20.10.16
+  stage: docker-push
+  script:
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+    - docker push $CI_REGISTRY_IMAGE:latest
