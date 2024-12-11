@@ -1,5 +1,6 @@
 package ch.gibb.localy.data.entity;
 
+
 import jakarta.persistence.*;
 
 @Entity(name = "message")
