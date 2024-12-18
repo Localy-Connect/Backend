@@ -14,8 +14,8 @@ variables:
     -DdeployAtEnd=true
     -X  # Füge den Debug-Parameter hinzu
   CI_REGISTRY: git-registry.gibb.ch/nzy134323/localy
-  CI_REGISTRY_USER: ibi135182
-  CI_REGISTRY_PASSWORD: glpat-EY2iEzbmsoeNM4g7aNKP
+  CI_REGISTRY_USER: $CI_USERNAME
+  CI_REGISTRY_PASSWORD: $DOCKER_ACCESS_TOKEN
 
 image: maven:3-openjdk-17
 
