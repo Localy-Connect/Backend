@@ -15,7 +15,7 @@ variables:
     -X  # Füge den Debug-Parameter hinzu
   CI_REGISTRY: git-registry.gibb.ch/nzy134323/localy
   CI_REGISTRY_USER: ibi135182
-  CI_REGISTRY_PASSWORD: glpat-79xfLVr68qvdVxqPcFsz
+  CI_REGISTRY_PASSWORD: glpat-EY2iEzbmsoeNM4g7aNKP
 
 image: maven:3-openjdk-17
 
