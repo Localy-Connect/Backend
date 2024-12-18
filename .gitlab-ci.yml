@@ -24,12 +24,20 @@ cache:
     - .m2/repository
 
 stages:
+  - mavenVerify
   - build
   - test
   - package
   - deploy
   - docker-build
   - docker-push
+
+mavenVerify:
+  stage: mavenVerify
+  script:
+    - mvn verify
+  only:
+    - merge_requests
 
 build:
   stage: build
