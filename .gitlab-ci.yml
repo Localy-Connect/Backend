@@ -75,6 +75,9 @@ docker-build:
   script:
     - docker build -t ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_REF_SLUG -f docker/frontend.Dockerfile .
     - docker tag ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE/frontend:latest
+
+    - docker build -t ${CI_REGISTRY_IMAGE}/backend:$CI_COMMIT_REF_SLUG -f docker/backend.Dockerfile .
+    - docker tag ${CI_REGISTRY_IMAGE}/backend:$CI_COMMIT_REF_SLUG $CI_REGISTRY_IMAGE/backend:latest
   artifacts:
     paths:
       - docker/frontend.Dockerfile
@@ -84,5 +87,9 @@ docker-push:
   stage: docker-push
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+
     - docker push ${CI_REGISTRY_IMAGE}/frontend:$CI_COMMIT_REF_SLUG
     - docker push ${CI_REGISTRY_IMAGE}/frontend:latest
+
+    - docker push ${CI_REGISTRY_IMAGE}/backend:$CI_COMMIT_REF_SLUG
+    - docker push ${CI_REGISTRY_IMAGE}/backend:latest
