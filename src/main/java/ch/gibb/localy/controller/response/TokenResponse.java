@@ -1,9 +1,7 @@
 package ch.gibb.localy.controller.response;
 
 
-import ch.gibb.localy.data.dto.UserDto;
 import ch.gibb.localy.data.entity.Token;
-import ch.gibb.localy.data.entity.mapper.UserMapper;
 
 public class TokenResponse {
     public final String token;

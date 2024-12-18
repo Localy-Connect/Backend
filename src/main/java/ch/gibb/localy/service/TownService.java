@@ -1,8 +1,6 @@
 package ch.gibb.localy.service;
 
-import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.dto.TownDto;
-import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.data.entity.Town;
 import ch.gibb.localy.data.entity.User;
 import ch.gibb.localy.data.entity.mapper.TownMapper;
@@ -13,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 

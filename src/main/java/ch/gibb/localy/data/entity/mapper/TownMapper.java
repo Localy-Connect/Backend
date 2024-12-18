@@ -10,7 +10,7 @@ public class TownMapper {
         TownDto dto = new TownDto();
         dto.setId(town.getId());
         dto.setName(town.getName());
-        if (town.getMessages() != null){
+        if (town.getMessages() != null) {
             dto.setMessages(town.getMessages().stream().map(MessageMapper::toDto).collect(Collectors.toSet()));
         }
         return dto;
