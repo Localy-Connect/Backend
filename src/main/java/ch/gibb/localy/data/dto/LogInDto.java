@@ -21,4 +21,9 @@ public class LogInDto {
     public void setName(String name) {
         this.name = name;
     }
+
+    public LogInDto(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }
