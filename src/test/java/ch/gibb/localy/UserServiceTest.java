@@ -38,7 +38,6 @@ class UserServiceTest {
 
     @Test
     void testSignIn_Success() {
-        // Arrange
         LogInDto logInDto = new LogInDto("testUser", "password123");
         User user = new User();
         user.setName("testUser");
@@ -49,10 +48,8 @@ class UserServiceTest {
         when(passwordEncoder.matches("password123", "encodedPassword")).thenReturn(true);
         when(tokenService.generateToken(user)).thenReturn(token);
 
-        // Act
         Token result = userService.signIn(logInDto);
 
-        // Assert
         assertNotNull(result);
         assertEquals("testToken", result.token());
         verify(userRepository).findByName("testUser");
@@ -62,7 +59,6 @@ class UserServiceTest {
 
     @Test
     void testSignIn_Failure_InvalidPassword() {
-        // Arrange
         LogInDto logInDto = new LogInDto("testUser", "wrongPassword");
         User user = new User();
         user.setName("testUser");
@@ -71,7 +67,6 @@ class UserServiceTest {
         when(userRepository.findByName("testUser")).thenReturn(user);
         when(passwordEncoder.matches("wrongPassword", "encodedPassword")).thenReturn(false);
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> userService.signIn(logInDto));
         verify(userRepository).findByName("testUser");
         verify(passwordEncoder).matches("wrongPassword", "encodedPassword");
@@ -80,7 +75,6 @@ class UserServiceTest {
 
     @Test
     void testSignUp_Success() {
-        // Arrange
         UserDto userDto = new UserDto();
         userDto.setName("newUser");
         userDto.setPassword("password123");
@@ -93,10 +87,8 @@ class UserServiceTest {
         when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        // Act
         userService.signUp(userDto);
 
-        // Assert
         verify(userRepository).findByName("newUser");
         verify(passwordEncoder).encode("password123");
         verify(userRepository).save(any(User.class));
@@ -104,7 +96,6 @@ class UserServiceTest {
 
     @Test
     void testSignUp_Failure_UserAlreadyExists() {
-        // Arrange
         UserDto userDto = new UserDto();
         userDto.setName("existingUser");
         userDto.setPassword("password123");
@@ -114,7 +105,6 @@ class UserServiceTest {
 
         when(userRepository.findByName("existingUser")).thenReturn(existingUser);
 
-        // Act & Assert
         assertThrows(IllegalArgumentException.class, () -> userService.signUp(userDto));
         verify(userRepository).findByName("existingUser");
         verifyNoInteractions(passwordEncoder);
