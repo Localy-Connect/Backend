@@ -34,7 +34,7 @@ public class TownServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private MessageRepository messageRepository; // Add this mock
+    private MessageRepository messageRepository;
 
     @InjectMocks
     private TownService townService;
