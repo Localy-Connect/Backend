@@ -19,12 +19,12 @@ export class HelpComponent {
   selectedLanguage = 'English';
 
   toggleSection(section: string) {
-    for (let key in this.sectionStates) {
-      if (this.sectionStates.hasOwnProperty(key)) {
+    for (const key in this.sectionStates) {
+      if (Object.prototype.hasOwnProperty.call(this.sectionStates, key)) {
         this.sectionStates[key] = false;
       }
     }
-    this.sectionStates[section] = !this.sectionStates[section];
+    this.sectionStates[section] =!this.sectionStates[section];
   }
 
   changeLanguage(language: string) {

@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
         }
       },
       error: err => {
-        console.error('Error checking login status:', err);
+        console.error(err);
         this.router.navigate(['/signin']);
       }
     });
@@ -46,11 +46,11 @@ export class ProfileComponent implements OnInit {
           this.user = data;
         },
         error: error => {
-          console.error('Error fetching user data:', error);
+          console.error(error);
         }
       });
     } else {
-      console.error('User ID not found');
+      console.error();
       this.router.navigate(['/signin']);
     }
   }

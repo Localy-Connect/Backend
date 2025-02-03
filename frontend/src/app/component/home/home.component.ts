@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
         this.towns = data;
       },
       error: (err) => {
-        console.error('Error fetching towns', err);
+        console.error(err);
       }
     });
   }
@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/town', townId]);
       },
       error: (err) => {
-        console.error('Error joining town', err);
+        console.error(err);
       }
     });
   }
@@ -64,10 +64,10 @@ export class HomeComponent implements OnInit {
       next: (result) => {
         if (result) {
           this.townService.createTown(result).subscribe({
-            next: (response) => {
+            next: () => {
               this.getTownList();
             },
-            error: (error) => {
+            error: () => {
               this.snackBar.open("Town couldn't be created. Try a new name.", 'Close', {
                 duration: 3000
               });
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error closing dialog', err);
+        console.error(err);
       }
     });
   }
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
     if (!this.searchTerm) {
       return this.towns;
     }
-    return this.towns.filter(town => 
+    return this.towns.filter(town =>
       town.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }

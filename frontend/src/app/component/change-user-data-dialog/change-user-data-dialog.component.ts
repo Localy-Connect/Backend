@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsersService } from '../../services/user/users.service';
 import { User } from '../../model/model';
@@ -9,7 +9,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './change-user-data-dialog.component.html',
   styleUrls: ['./change-user-data-dialog.component.css']
 })
-export class ChangeUserDataDialogComponent implements OnInit {
+export class ChangeUserDataDialogComponent {
   userData: User;
 
   constructor(
@@ -21,8 +21,6 @@ export class ChangeUserDataDialogComponent implements OnInit {
     this.userData = { ...data };
   }
 
-  ngOnInit(): void {}
-
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -33,7 +31,7 @@ export class ChangeUserDataDialogComponent implements OnInit {
         console.log('User data updated successfully', response);
         this.dialogRef.close(true);
       },
-      error: err => {
+      error: () => {
         this.snackBar.open("Profile couldn't be changed. Try again.", 'Close', {
           duration: 3000
         });

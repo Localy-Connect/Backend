@@ -43,7 +43,7 @@ export class ChangePasswordDialogComponent {
         this.dialogRef.close(true);
       },
       error: err => {
-        console.error('Error changing password:', err);
+        console.error(err);
         this.snackBar.open("Password couldn't be changed. Try again.", 'Close', {
           duration: 3000
         });

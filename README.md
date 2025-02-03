@@ -1,51 +1,66 @@
-Initialisierung:
+# **Projekt-Setup**
 
- Zu erst öffnen wir ein Terminal in der IDE unserer Wahl. Danach führen wir ```cd docker``` aus um in den Docker Ordner zu gelangen, hier wird unser Container laufen, in dem sich unsere Datenbank befindet.
- 
- Um diesen zu starten führen wir ```docker-compose up-d``` aus das -d steht für detached es bewirkt das wir dieses terminal nicht während der Laufzeit unserer Db offen haben müssen.
-
- Danach kann man die main Klasse in ```ch.gibb.localy.LocalyApplication.java``` starten (nur beim ersten starten nötig danach sollte die IDE automatisch eine Runconfiguration machen).
-
- zum Schluss starten wir dann noch das Frontend. Zuerst öffnen wir ein neues Terminal in unserer IDE. Mit ```cd frontend``` gelangen wir dann in den Ordner indem wir unser Frontend entwickelt haben.
- Hier führen wir dann ```npm install```aus. wenn dieser Befehl fertig ausgeführt wurde können wir das Frontend mit ```ng serve``` starten
-
-Ziele:
+**Installationen die nötig sind um das Projekt zu starten:**
+1. **Docker**
+2. **npm**
+1. **Maven**
+1. **Fylway**
+1. **Node**
 
 
--Website Mobile freundlich machen. 
+## **Initialisierung**
+1. **Backend-Setup:**
+ - Öffnen Sie ein Terminal in Ihrer bevorzugten IDE.
+ - Wechseln Sie in den Docker-Ordner mit:
+   ```bash
+   cd docker
+   ```
+ - Starten Sie den Docker-Container mit:
+   ```bash
+   docker-compose up -d
+   ```
+ - **Hinweis:** Das `-d`-Flag sorgt dafür, dass der Prozess im Hintergrund läuft.
+
+2. **Backend-Start:**
+ - Starten Sie die Hauptklasse:
+   ```bash
+   ch.gibb.localy.LocalyApplication.java
+   ```
+
+3. **Frontend-Setup:**
+ - Öffnen Sie ein neues Terminal und wechseln Sie in das Frontend-Verzeichnis:
+   ```bash
+   cd frontend
+   ```
+ - Installieren Sie die erforderlichen Abhängigkeiten:
+   ```bash
+   npm install
+   ```
+ - Starten Sie das Frontend:
+   ```bash
+   ng serve
+   ```
+ - **Standard-URL:** `http://localhost:4200`
+
+## **Teamrollen**
+- **Collin:** Projektleiter
+- **Jan:** Tester und Entwickler
+- **Levin:** Qualitätsverantwortlicher und Entwickler
+- **Noah:** Entwickler
+- **Ilay:** Lösungsarchitekt und Entwickler
+
+---
+
+## **Systemvoraussetzungen**
+- **Node.js:** Version >= 14.x
+- **Java:** Version >= 17.x
+- **Docker:** Version >= 20.x
+
+---
+
+## **API-Dokumentation**
+- **Backend-API:** Wir haben Swagger in unserem Backend implementiert, um die API-Dokumentation zu erstellen. 
+- Nach dem Start der Anwendung können Sie die Dokumentation unter folgendem Link aufrufen: http://localhost:8080/swagger-ui/index.html.
 
 
--Frontend schöner und Userfreundlicher machen. 
-
-
--Aktualisation Gemeinde nach Standort der Person. 
-
-
-Anforderungen: 
-
-
--Farbkonzept erarbeiten 
-
-
--Mobile Applikationsentwicklung einlesen 
-
-
--Google maps GPS integration 
-
-
-Rollen:
-
-
-Collin: Projektleiter
-
-
-Jan: Tester und Entwickler
-
-
-Levin: Qualitätsverantwortlicher und Entwickler
-
-
-Noah: Entwickler 
-
-
-Ilay: Lösungsarchjtekt und Entwickler
+**Hinweis:** Weitere angaben, um an diesem Projekt teilzunehmem finden sie im CONTRIBUTING.md
