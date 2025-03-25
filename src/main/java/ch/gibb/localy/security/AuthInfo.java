@@ -3,6 +3,8 @@ package ch.gibb.localy.security;
 import ch.gibb.localy.data.entity.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
+
 
 public class AuthInfo {
 
@@ -13,5 +15,13 @@ public class AuthInfo {
     private static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
-
+    
+    public static String getCurrentUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Jwt) {
+            Jwt jwt = (Jwt) authentication.getPrincipal();
+            return jwt.getClaimAsString("email");
+        }
+        return null;
+    }
 }
