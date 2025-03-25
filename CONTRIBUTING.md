@@ -97,6 +97,7 @@ Die folgende Pipeline-Struktur wird verwendet:
       ```bash
       ng test
       ```
+      
 
 3. **Deploy:**
     - Stellt die Anwendung in der Test- oder Produktionsumgebung bereit.
