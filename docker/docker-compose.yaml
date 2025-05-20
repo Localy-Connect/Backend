@@ -24,5 +24,56 @@ services:
     volumes:
       - ./src/main/resources/db.migration:/flyway/sql
 
+  # ── Monitoring-Stack ──────────────────────────────────────────────────────
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: localy_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    depends_on:
+      - postgres
+      # - localy_app  # 👉 Nur aktivieren, wenn deine App als Service mitläuft
+
+  loki:
+    image: grafana/loki:2.8.2
+    container_name: localy_loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:ro
+
+  promtail:
+    image: grafana/promtail:2.8.2
+    container_name: localy_promtail
+    volumes:
+      - /var/log:/var/log                      # 👉 Für Host-Logs (optional nützlich)
+      - ./promtail-config.yaml:/etc/promtail/config.yaml:ro
+    command:
+      - -config.file=/etc/promtail/config.yaml
+    depends_on:
+      - loki
+
+  grafana:
+    image: grafana/grafana:9.3.3
+    container_name: localy_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"       # ❗ Vorsicht: öffentlich zugänglich
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+      - loki
+
 volumes:
   postgres_data:
+  grafana_data:

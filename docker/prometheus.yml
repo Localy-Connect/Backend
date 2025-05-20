@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'localy_app'
+    static_configs:
+      - targets: ['localy_app:8080']
+
+  # Docker-Compose-intern: Prometheus selbst
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
