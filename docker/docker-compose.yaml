@@ -1,27 +1,95 @@
 version: '3.8'
+
 services:
+  # PostgreSQL für Localy
   localy_postgres:
-    image: postgres:15
+    image: postgres:15-alpine
+    container_name: localy_postgres
+    restart: always
     environment:
       POSTGRES_DB: localydb
       POSTGRES_USER: localyuser
       POSTGRES_PASSWORD: localysecret
-    ports: ["5432:5432"]
-    volumes: ["localy_pgdata:/var/lib/postgresql/data"]
+    volumes:
+      - localy_pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
 
+  # PostgreSQL für Auth
   auth_postgres:
-    image: postgres:15
+    image: postgres:15-alpine
+    container_name: auth_postgres
+    restart: always
     environment:
       POSTGRES_DB: authdb
       POSTGRES_USER: authuser
       POSTGRES_PASSWORD: authsecret
-    ports: ["5433:5432"]
-    volumes: ["auth_pgdata:/var/lib/postgresql/data"]
-
-  mqtt_broker:
-    image: eclipse-mosquitto:2
+    volumes:
+      - auth_pgdata:/var/lib/postgresql/data
     ports:
-      - "1883:1883"
+      - '5433:5432'
+
+  # MQTT-Broker
+  mqtt_broker:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt_broker
+    restart: always
+    ports:
+      - '1883:1883'
+
+  # Spring Boot Service für Localy
+  localy_service:
+    build:
+      context: ../
+      dockerfile: docker/backend.Dockerfile
+    container_name: localy_service
+    restart: on-failure
+    depends_on:
+      - localy_postgres
+      - auth_postgres
+      - mqtt_broker
+    ports:
+      - '8080:8080'
+    environment:
+      SPRING_APPLICATION_NAME: Localy
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localy_postgres:5432/localydb
+      SPRING_DATASOURCE_USERNAME: localyuser
+      SPRING_DATASOURCE_PASSWORD: localysecret
+      SPRING_FLYWAY_ENABLED: "true"
+      JWT_SECRET: 9o2vYvK9Zxq1r3Td5u6N8sV0wYfGhJkLmN4OpQrStUsdsa
+      JWT_EXPIRATION_MILLIS: 3600000
+      MQTT_BROKER_URL: tcp://mqtt_broker:1883
+      MQTT_CLIENT_ID: "localy-client-$${random.value}"
+      MQTT_TOPIC_USER_UPDATE: user/update
+      MQTT_TOPIC_USER_INFO: user/info
+
+  # Spring Boot Service für Authentication
+  authentication_service:
+    build:
+      context: ../../Authentication
+      dockerfile: docker/backend.Dockerfile
+    container_name: authentication_service
+    restart: on-failure
+    depends_on:
+      - auth_postgres
+      - mqtt_broker
+    ports:
+      - '8090:8090'
+    environment:
+      SPRING_APPLICATION_NAME: AuthService
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth_postgres:5432/authdb
+      SPRING_DATASOURCE_USERNAME: authuser
+      SPRING_DATASOURCE_PASSWORD: authsecret
+      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_LOCATIONS: classpath:db/migration
+      SERVER_PORT: "8090"
+      SPRING_SECURITY_USER_NAME: unused
+      SPRING_SECURITY_USER_PASSWORD: unused
+      JWT_SECRET: 9o2vYvK9Zxq1r3Td5u6N8sV0wYfGhJkLmN4OpQrStUsdsa
+      JWT_EXPIRATION_MILLIS: 3600000
+      MQTT_BROKER_URL: tcp://mqtt_broker:1883
+      MQTT_CLIENT_ID: "auth-service-$${random.value}"
+      MQTT_TOPIC_USER_UPDATE: user/update
 
 volumes:
   localy_pgdata:

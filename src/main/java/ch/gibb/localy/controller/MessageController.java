@@ -1,13 +1,15 @@
 package ch.gibb.localy.controller;
 
+import ch.gibb.localy.data.dto.MessageDto;
 import ch.gibb.localy.data.entity.Message;
+import ch.gibb.localy.data.entity.UserInfo;
+import ch.gibb.localy.security.AuthInfo;
 import ch.gibb.localy.service.MessageService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,13 +21,10 @@ public class MessageController {
 
     @PostMapping("/send")
     public ResponseEntity<Message> sendMessage(
-            @RequestParam Integer townId,
-            @RequestParam String title,
-            @RequestParam String text,
-            Authentication authentication) {
+            @RequestBody MessageDto dto) {
 
-        Integer senderId = (Integer) authentication.getPrincipal();
-        Message m = messageService.sendMessage(senderId, townId, title, text);
+        UserInfo user = AuthInfo.getUser();
+        Message m = messageService.sendMessage(user.getId(), Math.toIntExact(dto.getTownId()), dto.getTitle(), dto.getText());
         return ResponseEntity.ok(m);
     }
 }
