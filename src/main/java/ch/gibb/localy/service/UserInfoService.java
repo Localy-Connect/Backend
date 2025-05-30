@@ -1,5 +1,6 @@
 package ch.gibb.localy.service;
 
+import ch.gibb.localy.data.dto.UserInfoDto;
 import ch.gibb.localy.data.entity.Town;
 import ch.gibb.localy.data.entity.UserInfo;
 import ch.gibb.localy.data.repository.TownRepository;
@@ -29,10 +30,10 @@ public class UserInfoService {
         return userInfoRepo.findById(id);
     }
 
-    public UserInfo updateUser(Integer id, String username, Integer townId) {
-        UserInfo ui = userInfoRepo.findById(id).orElseThrow();
-        ui.setUsername(username);
-        ui.setTown(townRepo.findById(townId).orElseThrow());
+    public UserInfo updateUser(UserInfoDto userInfoDto) {
+        UserInfo ui = userInfoRepo.findById(userInfoDto.getUserId()).orElseThrow();
+        ui.setUsername(userInfoDto.getUsername());
+        ui.setTown(townRepo.findById(userInfoDto.getTownId()).orElse(null));
         return userInfoRepo.save(ui);
     }
 }

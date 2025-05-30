@@ -22,9 +22,12 @@ public class MessageService {
     @Autowired
     private TownRepository townRepo;
 
-    public Message sendMessage(Integer senderId, Integer townId, String title, String text) {
+    public Message sendMessage(Integer senderId, Long townId, String title, String text) {
         UserInfo sender = userInfoRepo.findById(senderId).orElseThrow();
-        Town town = townRepo.findById(townId).orElseThrow();
+        Town town = null;
+        if (townId != null) {
+            town = townRepo.findById(townId.intValue()).orElse(null);
+        }
 
         Message m = new Message();
         m.setSender(sender);

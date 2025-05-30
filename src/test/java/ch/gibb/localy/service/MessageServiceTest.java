@@ -35,7 +35,7 @@ class MessageServiceTest {
         when(townRepo.findById(3)).thenReturn(Optional.of(town));
         when(msgRepo.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-        Message m = messageService.sendMessage(5, 3, "Hi", "Hello");
+        Message m = messageService.sendMessage(5, 3L, "Hi", "Hello");
         assertNotNull(m);
         assertEquals(sender, m.getSender());
         assertEquals(town, m.getTown());

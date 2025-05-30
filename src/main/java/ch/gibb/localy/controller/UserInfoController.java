@@ -1,7 +1,10 @@
 package ch.gibb.localy.controller;
 
+import ch.gibb.localy.data.dto.MessageDto;
+import ch.gibb.localy.data.dto.UserInfoDto;
 import ch.gibb.localy.data.entity.UserInfo;
 import ch.gibb.localy.service.UserInfoService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +18,13 @@ public class UserInfoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserInfo> updateUser(
-            @PathVariable Integer id,
-            @RequestParam String username,
-            @RequestParam Integer townId) {
-        UserInfo ui = userInfoService.updateUser(id, username, townId);
-        return ResponseEntity.ok(ui);
+            @RequestBody UserInfoDto dto,
+            @RequestHeader("Idempotency-Key") String idempotencyKey) {
+
+        UserInfo ui = userInfoService.updateUser(dto);
+        return ResponseEntity
+                .ok()
+                .header("Idempotency-Key", idempotencyKey)
+                .body(ui);
     }
 }
