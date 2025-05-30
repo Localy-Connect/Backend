@@ -6,10 +6,8 @@ services:
     image: postgres:15-alpine
     container_name: localy_postgres
     restart: always
-    environment:
-      POSTGRES_DB: localydb
-      POSTGRES_USER: localyuser
-      POSTGRES_PASSWORD: localysecret
+    env_file:
+      - ./env/postgres_localy.env
     volumes:
       - localy_pgdata:/var/lib/postgresql/data
     ports:
@@ -20,10 +18,8 @@ services:
     image: postgres:15-alpine
     container_name: auth_postgres
     restart: always
-    environment:
-      POSTGRES_DB: authdb
-      POSTGRES_USER: authuser
-      POSTGRES_PASSWORD: authsecret
+    env_file:
+      - ./env/postgres_auth.env
     volumes:
       - auth_pgdata:/var/lib/postgresql/data
     ports:
@@ -50,18 +46,8 @@ services:
       - mqtt_broker
     ports:
       - '8080:8080'
-    environment:
-      SPRING_APPLICATION_NAME: Localy
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localy_postgres:5432/localydb
-      SPRING_DATASOURCE_USERNAME: localyuser
-      SPRING_DATASOURCE_PASSWORD: localysecret
-      SPRING_FLYWAY_ENABLED: "true"
-      JWT_SECRET: 9o2vYvK9Zxq1r3Td5u6N8sV0wYfGhJkLmN4OpQrStUsdsa
-      JWT_EXPIRATION_MILLIS: 3600000
-      MQTT_BROKER_URL: tcp://mqtt_broker:1883
-      MQTT_CLIENT_ID: "localy-client-$${random.value}"
-      MQTT_TOPIC_USER_UPDATE: user/update
-      MQTT_TOPIC_USER_INFO: user/info
+    env_file:
+      - ./env/localy_service.env
 
   # Spring Boot Service für Authentication
   authentication_service:
@@ -75,21 +61,8 @@ services:
       - mqtt_broker
     ports:
       - '8090:8090'
-    environment:
-      SPRING_APPLICATION_NAME: AuthService
-      SPRING_DATASOURCE_URL: jdbc:postgresql://auth_postgres:5432/authdb
-      SPRING_DATASOURCE_USERNAME: authuser
-      SPRING_DATASOURCE_PASSWORD: authsecret
-      SPRING_FLYWAY_ENABLED: "true"
-      SPRING_FLYWAY_LOCATIONS: classpath:db/migration
-      SERVER_PORT: "8090"
-      SPRING_SECURITY_USER_NAME: unused
-      SPRING_SECURITY_USER_PASSWORD: unused
-      JWT_SECRET: 9o2vYvK9Zxq1r3Td5u6N8sV0wYfGhJkLmN4OpQrStUsdsa
-      JWT_EXPIRATION_MILLIS: 3600000
-      MQTT_BROKER_URL: tcp://mqtt_broker:1883
-      MQTT_CLIENT_ID: "auth-service-$${random.value}"
-      MQTT_TOPIC_USER_UPDATE: user/update
+    env_file:
+      - ./env/auth_service.env
 
 volumes:
   localy_pgdata:
