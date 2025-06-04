@@ -1,13 +1,14 @@
 package ch.gibb.localy.security;
 
-import ch.gibb.localy.data.entity.User;
+
+import ch.gibb.localy.data.entity.UserInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuthInfo {
 
-    public static User getUser() {
-        return (User) getAuthentication().getPrincipal();
+    public static UserInfo getUser() {
+        return (UserInfo) getAuthentication().getPrincipal();
     }
 
     private static Authentication getAuthentication() {

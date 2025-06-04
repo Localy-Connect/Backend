@@ -1,28 +1,69 @@
-services:
-  postgres:
-    image: postgres:latest
-    container_name: localy_postgres
-    environment:
-      POSTGRES_DB: localydb
-      POSTGRES_USER: localyuser
-      POSTGRES_PASSWORD: localysecret
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+version: '3.8'
 
-  flyway:
-    image: flyway/flyway
-    depends_on:
-      - postgres
-    command: migrate
-    environment:
-      FLYWAY_URL: jdbc:postgresql://postgres:5432/localydb
-      FLYWAY_USER: localyuser
-      FLYWAY_PASSWORD: localysecret
-      FLYWAY_LOCATIONS: filesystem:/flyway/sql
+services:
+  # PostgreSQL für Localy
+  localy_postgres:
+    image: postgres:15-alpine
+    container_name: localy_postgres
+    restart: always
+    env_file:
+      - ./env/postgres_localy.env
     volumes:
-      - ./src/main/resources/db.migration:/flyway/sql
+      - localy_pgdata:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  # PostgreSQL für Auth
+  auth_postgres:
+    image: postgres:15-alpine
+    container_name: auth_postgres
+    restart: always
+    env_file:
+      - ./env/postgres_auth.env
+    volumes:
+      - auth_pgdata:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  # MQTT-Broker
+  mqtt_broker:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt_broker
+    restart: always
+    ports:
+      - '1883:1883'
+
+  # Spring Boot Service für Localy
+  localy_service:
+    build:
+      context: ../
+      dockerfile: docker/backend.Dockerfile
+    container_name: localy_service
+    restart: on-failure
+    depends_on:
+      - localy_postgres
+      - auth_postgres
+      - mqtt_broker
+    ports:
+      - '8080:8080'
+    env_file:
+      - ./env/localy_service.env
+
+  # Spring Boot Service für Authentication
+  authentication_service:
+    build:
+      context: ../../Authentication
+      dockerfile: docker/backend.Dockerfile
+    container_name: authentication_service
+    restart: on-failure
+    depends_on:
+      - auth_postgres
+      - mqtt_broker
+    ports:
+      - '8090:8090'
+    env_file:
+      - ./env/auth_service.env
 
 volumes:
-  postgres_data:
+  localy_pgdata:
+  auth_pgdata:

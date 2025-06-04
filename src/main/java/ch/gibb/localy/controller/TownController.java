@@ -1,91 +1,93 @@
 package ch.gibb.localy.controller;
 
 import ch.gibb.localy.data.dto.TownDto;
-import ch.gibb.localy.data.entity.User;
-import ch.gibb.localy.security.AuthInfo;
+import ch.gibb.localy.data.dto.UserInfoDto;
+import ch.gibb.localy.data.dto.MessageDto;
+import ch.gibb.localy.data.entity.Town;
+import ch.gibb.localy.data.entity.UserInfo;
+import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.service.TownService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/towns")
+@RequestMapping("/api/towns")
 public class TownController {
 
     @Autowired
     private TownService townService;
 
-    @Operation(summary = "Find a town by its ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the town"),
-            @ApiResponse(responseCode = "404", description = "Town not found")
-    })
-    @GetMapping("/{id}")
-    public TownDto findById(@PathVariable Integer id) {
-        try {
-            return townService.findById(id);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Town not found");
-        }
+    @PostMapping
+    public ResponseEntity<TownDto> createTown(@RequestParam String name,
+                                              @RequestHeader("Idempotency-Key") String idempotencyKey) {
+        Town created = townService.createTown(name);
+        return ResponseEntity
+                .ok()
+                .header("Idempotency-Key", idempotencyKey)
+                .body(toDto(created));
     }
 
-    @Operation(summary = "Get a list of all towns")
-    @ApiResponse(responseCode = "200", description = "Found the towns")
     @GetMapping
-    public List<TownDto> findAll() {
-        return townService.findAll();
+    public ResponseEntity<List<TownDto>> getTowns() {
+        List<Town> all = townService.getTowns();
+        List<TownDto> dtos = all.stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
-    @Operation(summary = "Delete a town by its ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Deleted the town"),
-            @ApiResponse(responseCode = "404", description = "Town not found")
-    })
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        try {
-            townService.deleteById(id);
-        } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Town not found");
+    @GetMapping("/{id}/residents")
+    public ResponseEntity<Set<UserInfoDto>> getResidents(@PathVariable Integer id) {
+        Set<UserInfo> residents = townService.getResidents(id);
+        Set<UserInfoDto> dtos = residents.stream()
+                .map(this::toUserInfoDto)
+                .collect(Collectors.toSet());
+        return ResponseEntity.ok(dtos);
+    }
+
+    private TownDto toDto(Town t) {
+        TownDto dto = new TownDto();
+        dto.setId(t.getId().longValue());
+        dto.setName(t.getName());
+        dto.setMessages(
+                t.getMessages()
+                        .stream()
+                        .map(this::toMessageDto)
+                        .collect(Collectors.toSet())
+        );
+        return dto;
+    }
+
+    private UserInfoDto toUserInfoDto(UserInfo u) {
+        UserInfoDto dto = new UserInfoDto();
+        dto.setUserId(u.getId());
+        dto.setUsername(u.getUsername());
+        dto.setTownId(u.getTown() != null ? u.getTown().getId() : null);
+        return dto;
+    }
+
+    private MessageDto toMessageDto(Message m) {
+        MessageDto dto = new MessageDto();
+        dto.setId(m.getId().longValue());
+        dto.setText(m.getText());
+
+        Long senderId = null;
+        if (m.getSender() != null && m.getSender().getId() != null) {
+            senderId = m.getSender().getId().longValue();
         }
-    }
+        dto.setUserId(senderId);
 
-    @Operation(summary = "Update a town")
-    @ApiResponse(responseCode = "200", description = "Updated the town")
-    @PutMapping(consumes = "application/json")
-    public void update(@RequestBody TownDto townDto) {
-        townService.update(townDto);
-    }
+        Long townId = null;
+        if (m.getTown() != null && m.getTown().getId() != null) {
+            townId = m.getTown().getId().longValue();
+        }
+        dto.setTownId(townId);
 
-    @Operation(summary = "Create a new town")
-    @ApiResponse(responseCode = "200", description = "Created the town")
-    @PostMapping(consumes = "application/json")
-    public TownDto createTown(@RequestBody TownDto townDto) {
-        User user = AuthInfo.getUser();
-        return townService.createTown(townDto, user);
-    }
-
-    @Operation(summary = "Join a town")
-    @ApiResponse(responseCode = "200", description = "Joined the town")
-    @GetMapping("/{id}/join")
-    public void joinTown(@PathVariable Integer id) {
-        User userId = AuthInfo.getUser();
-        townService.joinTown(id, userId);
-    }
-
-    @Operation(summary = "Leave a town")
-    @ApiResponse(responseCode = "200", description = "Left the town")
-    @GetMapping("/{id}/leave")
-    public void leaveTown(@PathVariable Integer id) {
-        User userId = AuthInfo.getUser();
-        townService.leaveTown(id, userId);
+        return dto;
     }
 }

@@ -1,12 +1,9 @@
 package ch.gibb.localy.data.repository;
 
-import ch.gibb.localy.data.entity.Message;
 import ch.gibb.localy.data.entity.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Integer> {
-    List<Message> findBySender(UserInfo sender);
+public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 }

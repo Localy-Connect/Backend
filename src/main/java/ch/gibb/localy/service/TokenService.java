@@ -2,51 +2,61 @@ package ch.gibb.localy.service;
 
 
 import ch.gibb.localy.data.entity.Token;
-import ch.gibb.localy.data.entity.User;
-import ch.gibb.localy.data.repository.UserRepository;
-import io.jsonwebtoken.Claims;
+import ch.gibb.localy.data.repository.UserInfoRepository;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-
 
 @Service
 @Transactional
 public class TokenService {
 
-    private static final SecretKey SIGNING_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    @Value("${jwt.secret}")
+    private String secret;
 
-    private final UserRepository userRepository;
+    private SecretKey signingKey;
+
+    private final UserInfoRepository userRepository;
 
     @Autowired
-    public TokenService(UserRepository userRepository) {
+    public TokenService(UserInfoRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public Token generateToken(User user) {
-        Claims claims = Jwts.claims().setSubject(user.getId().toString());
-        String tokenString = Jwts.builder()
-                .setClaims(claims)
-                .signWith(SIGNING_KEY)
-                .compact();
-        return new Token(tokenString, user);
+    @PostConstruct
+    private void init() {
+        if (signingKey != null) {
+            this.signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        } else this.signingKey = Keys.hmacShaKeyFor("9o2vYvK9Zxq1r3Td5u6N8sV0wYfGhJkLmN4OpQrStUsdsa".getBytes());
     }
 
     public Optional<Token> validateToken(String token) {
         try {
-            var claims = Jwts.parserBuilder().setSigningKey(SIGNING_KEY).build().parseClaimsJws(token).getBody();
-            var userId = Integer.parseInt(claims.getSubject());
-            return userRepository.findById((long) userId).map(user -> new Token(token, user));
+            var claims = Jwts
+                    .parserBuilder()
+                    .setSigningKey(signingKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+
+            var userId = claims.get("user_id", Integer.class);
+            System.out.println("Validating token for userId=" + userId);
+
+            return userRepository
+                    .findById(userId)
+                    .map(user -> new Token(token, user));
         } catch (JwtException e) {
             return Optional.empty();
         }
     }
-
 }

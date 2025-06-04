@@ -8,14 +8,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.security.SecureRandom;
 import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -25,9 +23,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-    static byte[] seed = new byte[1428];
-    private static final SecureRandom secureRandom = new SecureRandom(seed);
-    private static final int strength = 10;
     private final TokenAuthenticationFilter filter;
     private final TokenAuthenticationEntryPoint entryPoint;
 
@@ -35,11 +30,6 @@ public class SecurityConfig {
     public SecurityConfig(TokenAuthenticationFilter filter, TokenAuthenticationEntryPoint entryPoint) {
         this.filter = filter;
         this.entryPoint = entryPoint;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(strength, secureRandom);
     }
 
     @Bean
@@ -51,7 +41,6 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated())
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
